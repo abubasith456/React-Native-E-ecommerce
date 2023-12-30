@@ -3,7 +3,7 @@ import React, { useEffect } from 'react';
 import { StyleSheet, View, Text, Image, TouchableOpacity } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 
-const Product = ({ route, navigation }) => {
+const ProductDetails = ({ route, navigation }) => {
     var { id, name, img, type, price } = route.params;
 
     if (price.toString().includes('$')) {
@@ -150,6 +150,6 @@ const styles = StyleSheet.create({
         lineHeight: 60,
     },
 });
-export default Product;
+export default ProductDetails;
 
 

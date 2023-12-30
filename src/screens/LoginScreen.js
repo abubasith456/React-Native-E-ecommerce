@@ -154,7 +154,7 @@ const styles = StyleSheet.create({
         padding: 20,
         backgroundColor: '#fff',
         alignItems: "center",
-        borderRadius: 10,
+        borderRadius: 30,
         shadowColor: '#000',
         shadowOffset: {
             width: 0,
@@ -172,6 +172,7 @@ const styles = StyleSheet.create({
     row: {
         flexDirection: 'row',
         marginTop: 4,
+        marginBottom: 10,
     },
     forgot: {
         fontSize: 13,

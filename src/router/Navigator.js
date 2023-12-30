@@ -13,6 +13,7 @@ import TabNavigator from "./TabNavigation";
 // import { getLoggedUser } from "../services/StorageUtils";
 import UpdatePasswordScreen from "../screens/UpdatePassword";
 import BannerScreen from "../screens/BannerScreen";
+import ProductDetailsScreen from '../screens/DetailsScreen'
 
 
 
@@ -56,6 +57,12 @@ export const RootStack = () => {
             <Stack.Screen name="OTP" component={OTP} options={{
                 headerShown: false,
             }} />
+            <Stack.Screen name="UpdatePassword" component={UpdatePasswordScreen} options={{
+                headerShown: false,
+            }} />
+            <Stack.Screen name="ProductDetails" component={ProductDetailsScreen} options={{
+                headerShown: false,
+            }} />
             {/* <Stack.Screen name="Home" component={Home} options={{
                 headerStyle: {
                     backgroundColor: '#3498db', // Set the background color of the app bar
@@ -76,9 +83,6 @@ export const RootStack = () => {
                 ),
             }} />
             <Stack.Screen name="Details" component={Details} />
-            <Stack.Screen name="UpdatePassword" component={UpdatePasswordScreen} options={{
-                headerShown: false,
-            }} />
             // <Stack.Screen name="Banner" component={BannerScreen} options={{
             //     headerShown: false
             // }} /> */}

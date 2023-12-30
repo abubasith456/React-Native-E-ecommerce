@@ -14,7 +14,7 @@ import { resetState } from '../redux/loginRedux/loginSlice'
 import { loggedInUser } from '../services/StorageUtils'
 import { TextInput as PaperTextInput, IconButton } from 'react-native-paper';
 
-const LoginScreen = ({ navigation }) => {
+const UpdatePasswordScreen = ({ navigation }) => {
     const [newPassword, setPassword] = useState({ value: '', error: '' })
     const [confirmPassword, setConfirmPassword] = useState({ value: '', error: '' })
     const [showPassword, setShowPassword] = useState(false);
@@ -123,7 +123,7 @@ const LoginScreen = ({ navigation }) => {
 }
 
 
-export default LoginScreen
+export default UpdatePasswordScreen
 
 const styles = StyleSheet.create({
     cardContainer: {
@@ -131,7 +131,7 @@ const styles = StyleSheet.create({
         padding: 20,
         backgroundColor: '#fff',
         alignItems: "center",
-        borderRadius: 10,
+        borderRadius: 30,
         shadowColor: '#000',
         shadowOffset: {
             width: 0,
