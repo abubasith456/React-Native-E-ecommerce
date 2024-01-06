@@ -19,7 +19,7 @@ const TabNavigator = () => {
             tabBarIcon: ({ focused, color, size }) => {
                 let iconName;
                 if (route.name === 'Home') {
-                    iconName = focused ? faHomeUser : faHomeAlt;
+                    iconName = focused ? faHome : faHomeAlt;
                 } else if (route.name === 'Menu') {
                     iconName = focused ? faList : faListCheck;
                 }

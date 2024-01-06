@@ -14,9 +14,9 @@ export const MenuScreen = ({ navigation }) => {
     function renderItem({ item }) {
         function pressHandler() {
             if (item.id == 1) {
-                //
+                navigation.navigate("Profile")
             } else if (item.id == 2) {
-                //
+                navigation.navigate("Orders")
             } else {
                 setIsDialogShow(true)
             }

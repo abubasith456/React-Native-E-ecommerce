@@ -14,11 +14,8 @@ import { generateColor } from '../utils/Colors';
 import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux'
 import { home } from '../repositories/apiRepo';
-import SkeletonLoading from './SkeletonLoading';
 const { width } = Dimensions.get('window');
 import { getLoggedUser } from '../services/StorageUtils'
-import { HomeShimmer } from '../components/Shimmering';
-import Skeleton from './SkeletonLoading';
 import ShowDialog from '../components/Dailog';
 
 function HomeScreen({ navigation }) {
@@ -133,13 +130,14 @@ export default HomeScreen;
 
 const styles = StyleSheet.create({
     container: {
+        height: "100%",
         backgroundColor: "#fff",
-        flex: 1,
-        paddingTop: Platform.OS === "android" ? 50 : 0,
+        flex: 2,
+        // marginTop: Platform.OS === "android" ? 50 : 0,
     },
     categories: {
         flexDirection: "row",
-        paddingVertical: 8,
+        paddingVertical: 5,
         paddingLeft: 14,
     },
     restaurantCardHeading: {

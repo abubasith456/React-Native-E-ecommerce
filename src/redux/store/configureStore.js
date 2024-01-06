@@ -7,6 +7,8 @@ import updatePasswordSlice from '../slice/updatePasswordSlice';
 import bannerSlice from '../slice/bannerSlice';
 import home from '../slice/home';
 import products from '../slice/products';
+import profileSlice from '../slice/profileSlice'
+import ordersSlice from '../slice/ordersSlice';
 
 
 export const store = configureStore({
@@ -17,7 +19,9 @@ export const store = configureStore({
     otpVerify: otpVerificationSlice,
     updatePassword: updatePasswordSlice,
     banner: bannerSlice,
-    home, home,
-    products, products,
+    home: home,
+    products: products,
+    profile: profileSlice,
+    orders: ordersSlice
   },
 });

@@ -15,22 +15,14 @@ import UpdatePasswordScreen from "../screens/UpdatePassword";
 import BannerScreen from "../screens/BannerScreen";
 import ProductDetailsScreen from '../screens/DetailsScreen'
 import ProductScreen from "../screens/ProductsScreen";
+import ProfileScreen from "../screens/ProfileScreen"
+import OrdersScreen from "../screens/OrdersListscrean";
 
 
 
 const Stack = createNativeStackNavigator();
 const loggedIn = ""
 export const RootStack = () => {
-    const navigation = useNavigation("");
-
-    const data = async () => {
-
-    }
-
-    useEffect(() => {
-        data();
-    }, [])
-
     return (
         <Stack.Navigator initialRouteName="Splash">
             <Stack.Screen
@@ -65,6 +57,12 @@ export const RootStack = () => {
 
             }} />
             <Stack.Screen name="Products" component={ProductScreen} options={{
+
+            }} />
+            <Stack.Screen name="Profile" component={ProfileScreen} options={{
+
+            }} />
+            <Stack.Screen name="Orders" component={OrdersScreen} options={{
 
             }} />
             {/* <Stack.Screen name="Home" component={Home} options={{

@@ -129,7 +129,7 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.1,
         elevation: 4,
         marginRight: 15,
-        marginBottom: 10,
+        marginBottom: 0,
     },
     likeContainer: {
         alignItems: "center",

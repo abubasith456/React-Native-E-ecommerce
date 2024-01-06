@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
         alignSelf: "center",
         alignItems: "center",
         justifyContent: "space-between",
-        paddingBottom: 25,
+        paddingBottom: 5,
     },
     locationContainer: {
         flex: 1,

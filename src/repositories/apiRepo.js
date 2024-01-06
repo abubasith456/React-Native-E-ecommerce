@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
+import { TextDecoder } from 'text-encoding';
 
 const base_url = "https://hayat-shop.onrender.com"
 const axiosInstance = axios.create({ baseURL: base_url })
@@ -102,3 +103,33 @@ export const products = createAsyncThunk('products', async (payload) => {
     return response;
 });
 
+export const profile = createAsyncThunk('profile', async (payload) => {
+    console.log(payload);
+    const requesstData = {
+        userId: payload.userId
+    }
+    const res = await axiosInstance.post("/profile", requesstData);
+    const response = await res.data;
+    console.log("Profile =>" + JSON.stringify(response))
+    return response;
+});
+
+export const orders = createAsyncThunk('orders', async (payload) => {
+    console.log(payload);
+    const userId = payload.userId
+    try {
+        const response = await axiosInstance.get(`/orders?unique_id=${userId}`, {
+            responseType: 'arraybuffer',
+        });
+
+        // Process the streamed data
+        const data = new TextDecoder().decode(new Uint8Array(response.data));
+        const parsedData = JSON.parse(data);
+
+        // Return the parsed data
+        return parsedData;
+    } catch (error) {
+        console.error('Error fetching data:', error);
+        throw error; // Re-throw the error to be caught by the rejected action
+    }
+});
