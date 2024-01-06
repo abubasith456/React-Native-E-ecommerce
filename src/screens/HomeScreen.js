@@ -2,14 +2,14 @@
 import { FlatList, View, StyleSheet, Dimensions, Text, Pressable } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { CommonActions } from '@react-navigation/native';
-import MainItemsCard from '../components/HeaderCard';
+import ItemsCard from '../components/HeaderCard';
 import OrderAgainComponent from '../components/OrderAgainComponent';
-import { bannerData, categories, restaurantData } from '../constant/dish';
+import { restaurantData } from '../constant/dish';
 import HeaderIcon from '../components/HeaderIcons';
 import Category from '../components/Categories';
 import DishComponentContainer from '../components/DishComponentContainer';
 import FeaturedRestaurantsContainer from '../components/product/productsContainer';
-import Banner, { BannerShimmer, BannerShimmering } from '../components/Banner';
+import Banner from '../components/Banner';
 import { generateColor } from '../utils/Colors';
 import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux'
@@ -18,10 +18,13 @@ import SkeletonLoading from './SkeletonLoading';
 const { width } = Dimensions.get('window');
 import { getLoggedUser } from '../services/StorageUtils'
 import { HomeShimmer } from '../components/Shimmering';
+import Skeleton from './SkeletonLoading';
+import ShowDialog from '../components/Dailog';
 
 function HomeScreen({ navigation }) {
 
     const dispatch = useDispatch();
+    const [visible, setVisible] = useState(false);
     const { data, isLoader, isError } = useSelector(state => state.home);
     // Check if data and data.data.banner exist before rendering FlatList
     const bannerData = data?.data?.banner || [];
@@ -50,17 +53,23 @@ function HomeScreen({ navigation }) {
         </Pressable>
     }
 
+    function onDialogPressed() {
+        setVisible(false)
+    }
+
     if (isLoader) {
         return null
     }
 
     return (
         <SafeAreaView style={styles.container}>
+            {visible ? <ShowDialog message={data.message} onPress={onDialogPressed} /> : null}
             {/* Restaurants */}
             <FlatList
+                keyExtractor={item => item.id}
                 data={restaurantData}
                 renderItem={({ item }) => (
-                    <MainItemsCard
+                    <ItemsCard
                         image={item.image}
                         restaurant={item.restaurant}
                         duration={item.duration}

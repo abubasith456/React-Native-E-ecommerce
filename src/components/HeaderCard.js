@@ -7,60 +7,58 @@ import {
     Ionicons,
 } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
+import FastImage from 'react-native-fast-image'
 
-const MainItemsCard = (props) => {
+const ItemsCard = (props) => {
     const {
         image,
-        restaurant,
-        duration,
-        distance,
-        bill,
+        name,
+        price,
         rating,
-        discount,
-        isVeg,
-        totalOrder,
-        cuisines,
+        id,
+        description,
     } = props;
 
     const navigation = useNavigation();
 
-    console.log("called")
+    console.log("called===>" + image)
 
     return (
         <Pressable
             style={styles.container}
-            onPress={() =>
-                navigation.navigate("Restaurant", {
-                    restaurant,
-                    cuisines,
-                    duration,
-                    distance,
-                    rating,
+            onPress={() => {
+                navigation.navigate("ProductDetails", {
+                    name: name,
+                    price: price,
+                    img: image,
+                    id: id,
+                    description: description
                 })
             }
+            }
         >
-            <Image
+            <FastImage
                 source={{
                     uri: image,
                 }}
                 style={styles.image}
             />
             {/* isVeg */}
-            {isVeg && (
+            {/* {isVeg && (
                 <View style={styles.vegContainer}>
                     <MaterialCommunityIcons name="leaf" size={13} color="#fff" />
                     <Text style={styles.vegText}>pure veg RESTAURANT</Text>
                 </View>
-            )}
+            )} */}
 
             {/* like */}
-            <View style={styles.likeContainer}>
+            {/* <View style={styles.likeContainer}>
                 <Feather name="heart" size={20} color="#FC7D86" />
-            </View>
+            </View> */}
 
             {/* distance and duration */}
 
-            <View style={styles.timerContainer}>
+            {/* {duration == 0 ? null : <View style={styles.timerContainer}>
                 <Image
                     source={require("../images/time.png")}
                     style={styles.timerImage}
@@ -68,50 +66,50 @@ const MainItemsCard = (props) => {
                 <Text style={styles.duration}>{duration} min</Text>
                 <Text style={{ fontSize: 10, paddingHorizontal: 3 }}>|</Text>
                 <Text style={styles.distance}>{distance} km</Text>
-            </View>
+            </View>} */}
 
             {/* discount */}
-            <View style={styles.discountContainer}>
+            {/* {discount == 0 ? null : <View style={styles.discountContainer}>
                 <MaterialCommunityIcons
                     name="brightness-percent"
                     size={12}
                     color="#fff"
                 />
                 <Text style={styles.discount}>{discount}% off</Text>
-            </View>
+            </View>} */}
 
-            <View style={styles.restaurantInfo}>
+            <View style={styles.productNameContainer}>
                 <View style={styles.restaurantDetails}>
                     {/* restaurant name */}
-                    <Text style={styles.restaurantName}>{restaurant}</Text>
+                    <Text style={styles.restaurantName}>{name}</Text>
                     {/* rating */}
-                    <View style={styles.ratingContainer}>
+                    {rating == 0 ? null : <View style={styles.ratingContainer}>
                         {/* rating */}
                         <Text style={styles.rating}>{rating}</Text>
                         <FontAwesome name="star" size={10} color="#fff" />
-                    </View>
+                    </View>}
                 </View>
                 <View style={styles.cuisineDetails}>
-                    <Text style={styles.cuisine}>
+                    {/* <Text style={styles.cuisine}>
                         {cuisines.map((item) => {
                             return `${item}, `;
                         })}
-                    </Text>
-                    <Text style={styles.bill}>₹{bill} for one</Text>
+                    </Text> */}
+                    <Text style={styles.bill}>₹{price} for one</Text>
                 </View>
 
                 {/* hr */}
                 <View
-                    style={{ height: 0.1, backgroundColor: "gray", marginVertical: 10 }}
+                    style={{ height: 0.3, backgroundColor: "gray", marginVertical: 10 }}
                 />
 
                 {/* total number of order placed so far */}
-                <View style={styles.totalOrder}>
-                    <View style={styles.trendingIconContainer}>
+                <View style={styles.rateContainer}>
+                    <View style={styles.rateIconContainer}>
                         <Ionicons name="trending-up" size={9} color="#fff" />
                     </View>
-                    <Text style={styles.orderPlaced}>
-                        {totalOrder}+ order placed from here recently
+                    <Text style={styles.rate}>
+                        {description}
                     </Text>
                 </View>
             </View>
@@ -119,7 +117,7 @@ const MainItemsCard = (props) => {
     );
 };
 
-export default MainItemsCard;
+export default ItemsCard;
 
 const styles = StyleSheet.create({
     container: {
@@ -130,9 +128,9 @@ const styles = StyleSheet.create({
         shadowColor: "#000",
         shadowOffset: {
             height: 10,
-            width: 10,
+            width: 0,
         },
-        shadowOpacity: 0.1,
+        shadowOpacity: 0.2,
         elevation: 4,
         borderRadius: 20,
         marginVertical: 13,
@@ -150,10 +148,13 @@ const styles = StyleSheet.create({
         borderRadius: 20,
     },
     image: {
-        width: "100%",
+        width: "80%",
         height: 220,
+        alignContent: "center",
+        alignSelf: "center",
         borderTopLeftRadius: 20,
         borderTopRightRadius: 20,
+        resizeMode: FastImage.resizeMode.center
     },
     vegContainer: {
         flexDirection: "row",
@@ -217,7 +218,7 @@ const styles = StyleSheet.create({
         fontWeight: "bold",
         marginLeft: 4,
     },
-    restaurantInfo: {
+    productNameContainer: {
         padding: 10,
     },
     restaurantDetails: {
@@ -262,11 +263,11 @@ const styles = StyleSheet.create({
         fontWeight: "500",
         color: "#484848",
     },
-    totalOrder: {
+    rateContainer: {
         flexDirection: "row",
         alignItems: "center",
     },
-    trendingIconContainer: {
+    rateIconContainer: {
         width: 17,
         height: 17,
         backgroundColor: "#707FBD",
@@ -274,8 +275,8 @@ const styles = StyleSheet.create({
         alignItems: "center",
         justifyContent: "center",
     },
-    orderPlaced: {
-        fontSize: 9,
+    rate: {
+        fontSize: 12,
         marginLeft: 7,
         color: "#505050",
         fontWeight: "500",

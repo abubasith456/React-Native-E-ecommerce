@@ -2,6 +2,8 @@ import React from 'react';
 import styled from 'styled-components/native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { Text, Pressable } from 'react-native'
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+import { faHome, faList, faListCheck, faSignOutAlt, faDoorOpen, faPerson } from '@fortawesome/free-solid-svg-icons';
 
 
 // Styled components
@@ -40,16 +42,28 @@ const TimeStamp = styled.Text`
 `;
 
 const ChatTileCard = ({ icon, data, onPress }) => {
-    return (
-        <Pressable onPress={onPress}>
-            <ChatCardContainer>
-                <Ionicons name={icon} size={40} color={40}/>
-                <ContentContainer>
-                    <Text>{data}</Text>
-                </ContentContainer>
-            </ChatCardContainer>
-        </Pressable>
-    );
+  return (
+    <Pressable onPress={onPress}>
+      <ChatCardContainer>
+        <FontAwesomeIcon icon={getIcons(icon)} size={32} />
+        <ContentContainer>
+          <Text>{data}</Text>
+        </ContentContainer>
+      </ChatCardContainer>
+    </Pressable>
+  );
 };
+
+function getIcons(icon) {
+  console.log(icon)
+  if (icon == "person") {
+    return faPerson
+  } else if (icon == "list") {
+    return faList
+  } else if (icon == "exit") {
+    return faSignOutAlt
+  }
+  return faHome
+}
 
 export default ChatTileCard;

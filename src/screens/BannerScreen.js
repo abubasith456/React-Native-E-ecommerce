@@ -1,6 +1,6 @@
 import { View, Text, FlatList, StyleSheet, Pressable } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import MainItemsCard from '../components/HeaderCard';
+import ItemsCard from '../components/HeaderCard';
 import HomeTileCard from '../components/HomeTileCard';
 import { BackButtonWithText } from '../components/BackButton';
 import { CustomHeader } from '../components/Header';
@@ -10,14 +10,13 @@ import { useRef } from 'react';
 function BannerScreen({ route, navigation }) {
     const item = route.params.data
     const flatListRef = useRef(null);
-    
     function renderItem({ item }) {
         function pressHandler() {
             navigation.navigate('Details', {
                 item: item
             })
         }
-        return <MainItemsCard
+        return <ItemsCard
             image={item.productImage}
             restaurant={item.productName}
             duration={10}

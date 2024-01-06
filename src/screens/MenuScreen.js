@@ -4,6 +4,8 @@ import ChatTileCard from '../components/MenuCard';
 import { loggedInUser } from '../services/StorageUtils';
 import { ConfirmDialog } from '../components/Dailog';
 import { useState } from 'react';
+import { faHome, faList, faListCheck, faHomeAlt, faHomeUser } from '@fortawesome/free-solid-svg-icons';
+
 
 export const MenuScreen = ({ navigation }) => {
 
@@ -37,7 +39,7 @@ export const MenuScreen = ({ navigation }) => {
     }
 
     return (
-        <View>
+        <View style={{ flex: 1 }}>
             {isShowDialog ? <ConfirmDialog
                 title="Confirm"
                 message="Are you sure, do you wants to loggout?"

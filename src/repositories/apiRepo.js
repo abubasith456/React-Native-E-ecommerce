@@ -93,17 +93,12 @@ export const home = createAsyncThunk('home', async (payload) => {
     return response;
 });
 
-// export const changePassword = createAsyncThunk('passwordUpdate', async (payload) => {
-//     console.log(payload)
-//     const req = {
-//         "email": payload.email,
-//         "newPassword": payload.newPassword,
-//         "cnfrmNewPassword": payload.confirmPassword
-//     }
-//     const res = await axiosInstance.post("changePassword", req);
-//     const response = await res.data;
-//     console.log("TEST =>" + JSON.stringify(response))
-//     return response;
-// });
-
+export const products = createAsyncThunk('products', async (payload) => {
+    console.log(payload);
+    const productName = payload.productName;
+    const res = await axiosInstance.get("/" + productName);
+    const response = await res.data;
+    console.log("Products =>" + JSON.stringify(response))
+    return response;
+});
 

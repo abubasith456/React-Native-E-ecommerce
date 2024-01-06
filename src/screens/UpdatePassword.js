@@ -1,6 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react'
-import { Animated, TouchableOpacity, StyleSheet, View, Easing, ImageBackground } from 'react-native'
-import { Text } from 'react-native-paper'
+import { Animated, StyleSheet, View, Easing, ImageBackground } from 'react-native'
 import Background from '../components/Background'
 import Header from '../components/Header'
 import Button from '../components/Button'
@@ -11,8 +10,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { updatePassword } from '../repositories/apiRepo';
 import ShowDialog from '../components/Dailog'
 import { resetState } from '../redux/loginRedux/loginSlice'
-import { loggedInUser } from '../services/StorageUtils'
-import { TextInput as PaperTextInput, IconButton } from 'react-native-paper';
+import { TextInput as PaperTextInput } from 'react-native-paper';
 
 const UpdatePasswordScreen = ({ navigation }) => {
     const [newPassword, setPassword] = useState({ value: '', error: '' })
@@ -20,7 +18,7 @@ const UpdatePasswordScreen = ({ navigation }) => {
     const [showPassword, setShowPassword] = useState(false);
     const [visible, setVisible] = useState(false);
     const dispatch = useDispatch();
-    const { data, isLoader, isError } = useSelector(state => state.login);
+    const { data, isLoader, isError } = useSelector(state => state.updatePassword);
     const initialValue = 0;
     const translateValue = useRef(new Animated.Value(initialValue)).current;
 

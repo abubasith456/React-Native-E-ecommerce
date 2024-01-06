@@ -6,6 +6,7 @@ import otpVerificationSlice from '../slice/otpVerificationSlice';
 import updatePasswordSlice from '../slice/updatePasswordSlice';
 import bannerSlice from '../slice/bannerSlice';
 import home from '../slice/home';
+import products from '../slice/products';
 
 
 export const store = configureStore({
@@ -17,5 +18,6 @@ export const store = configureStore({
     updatePassword: updatePasswordSlice,
     banner: bannerSlice,
     home, home,
+    products, products,
   },
 });

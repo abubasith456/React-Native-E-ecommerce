@@ -4,12 +4,9 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Home from "../screens/HomeScreen";
 import { Button, StyleSheet, FlatList } from 'react-native'
 import { useNavigation } from '@react-navigation/native';
-import { loggedInUser } from '../services/StorageUtils';
-import Ionicons from 'react-native-vector-icons/Ionicons';
 import { theme } from '../theme/Theme';
-
-
-
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+import { faHome, faList, faListCheck, faHomeAlt, faHomeUser } from '@fortawesome/free-solid-svg-icons';
 import { MenuScreen } from '../screens/MenuScreen';
 
 
@@ -22,15 +19,13 @@ const TabNavigator = () => {
             tabBarIcon: ({ focused, color, size }) => {
                 let iconName;
                 if (route.name === 'Home') {
-                    iconName = focused
-                        ? 'home'
-                        : 'home-outline';
+                    iconName = focused ? faHomeUser : faHomeAlt;
                 } else if (route.name === 'Menu') {
-                    iconName = focused ? 'listt' : 'ios-list-outline';
+                    iconName = focused ? faList : faListCheck;
                 }
 
                 // You can return any component that you like here!
-                return <Ionicons name={iconName} size={size} color={color} />;
+                return <FontAwesomeIcon icon={iconName} size={size} color={color} />;
             },
             tabBarActiveTintColor: theme.colors.primary,
             tabBarInactiveTintColor: 'gray',

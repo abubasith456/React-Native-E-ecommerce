@@ -1,15 +1,13 @@
 import { Image, StyleSheet, Text, View } from "react-native";
 import React from "react";
-import {
-    Ionicons,
-    MaterialCommunityIcons,
-    FontAwesome,
-} from "@expo/vector-icons";
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+import { faMapLocation, faSearch, faListCheck, faSignOutAlt, faDoorOpen, faPerson } from '@fortawesome/free-solid-svg-icons';
+
 
 const HeaderIcon = () => {
     return (
         <View style={styles.container}>
-            <Ionicons name="location-sharp" size={30} color="#E23946" />
+            <FontAwesomeIcon icon={faMapLocation} size={25} />
             {/* location */}
             <View style={styles.locationContainer}>
                 <Text style={styles.locationType}>Home</Text>
@@ -18,7 +16,7 @@ const HeaderIcon = () => {
 
             {/* actions */}
             <View style={styles.actionBtns}>
-                <FontAwesome name="search" size={25} color="black" />
+                <FontAwesomeIcon icon={faSearch} size={25} />
             </View>
             <Image
                 source={{

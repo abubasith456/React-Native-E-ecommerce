@@ -18,6 +18,7 @@ const DishComponentContainer = (categories) => {
                     <DishComponent
                         image={item.image}
                         name={item.name}
+                        link={item.link}
                         key={item._id}
                     />
                 ))}

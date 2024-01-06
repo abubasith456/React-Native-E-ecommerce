@@ -1,22 +1,15 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, { useEffect } from 'react';
-import { StyleSheet, View, Text, Image, TouchableOpacity } from 'react-native';
-import { ScrollView } from 'react-native-gesture-handler';
+import { StyleSheet, View, Text, Image, TouchableOpacity, ScrollView, Sa } from 'react-native';
+import FastImage from 'react-native-fast-image'
 
 const ProductDetails = ({ route, navigation }) => {
-    var { id, name, img, type, price } = route.params;
-
-    if (price.toString().includes('$')) {
-        price = Math.round(price.replace('$', ''));
-    } else if (price.toString().includes('₹')) {
-        price = Math.round(price.replace('₹', ''));
-    }
-
+    var { id, name, img, type, price, description } = route.params;
     return (
         <View style={{ height: '100%', width: '100%', backgroundColor: '#fafafa' }}>
             <ScrollView>
                 <View style={{ height: 500, padding: 2 }}>
-                    <Image
+                    <FastImage
                         source={{ uri: img }}
                         resizeMode="contain"
                         style={{
@@ -52,7 +45,7 @@ const ProductDetails = ({ route, navigation }) => {
                         </Text>
                     </View>
                     <View style={{ flex: 1, alignItems: 'flex-end' }}>
-                        <Text style={styles.product_sub_title_text}>(40%)</Text>
+                        <Text style={styles.product_sub_title_text}>{description}</Text>
                     </View>
                 </View>
             </ScrollView>
@@ -110,7 +103,7 @@ const ProductDetails = ({ route, navigation }) => {
 };
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: COLORS.white,
+        backgroundColor: "white",
     },
     absolute: {
         position: 'absolute',

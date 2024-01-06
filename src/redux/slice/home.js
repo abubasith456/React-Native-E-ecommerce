@@ -33,10 +33,9 @@ const homeSlice = createSlice({
             }
         });
         builder.addCase(home.rejected, (state, action) => {
-            console.log("rejhect ==> " + action.payload)
             state.isLoader = false;
             state.isError = true;
-            state.data = null;
+            state.data = { message: "Something went wrong!" };
         });
     },
 

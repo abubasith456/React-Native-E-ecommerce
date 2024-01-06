@@ -14,13 +14,14 @@ import TabNavigator from "./TabNavigation";
 import UpdatePasswordScreen from "../screens/UpdatePassword";
 import BannerScreen from "../screens/BannerScreen";
 import ProductDetailsScreen from '../screens/DetailsScreen'
+import ProductScreen from "../screens/ProductsScreen";
 
 
 
 const Stack = createNativeStackNavigator();
 const loggedIn = ""
 export const RootStack = () => {
-    const navigation = useNavigation();
+    const navigation = useNavigation("");
 
     const data = async () => {
 
@@ -61,7 +62,10 @@ export const RootStack = () => {
                 headerShown: false,
             }} />
             <Stack.Screen name="ProductDetails" component={ProductDetailsScreen} options={{
-                headerShown: false,
+
+            }} />
+            <Stack.Screen name="Products" component={ProductScreen} options={{
+
             }} />
             {/* <Stack.Screen name="Home" component={Home} options={{
                 headerStyle: {
