@@ -1,8 +1,9 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { memo, useCallback, useEffect, useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Modal, FlatList } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux'
 import { orders } from '../repositories/apiRepo';
 import { getLoggedUser } from '../services/StorageUtils'
+import LoaderModal from '../components/Loader';
 
 
 const OrdersScreen = () => {
@@ -14,18 +15,14 @@ const OrdersScreen = () => {
         if (isError) {
             //
         }
-        // const intervalId = setInterval(() => {
         getLoggedUser().then((userId) => {
             dispatch(orders({ userId: userId }))
         })
-        // }, 5000); // 5000 milliseconds (5 seconds)
-
-        // return () => clearInterval(intervalId);
     }, [dispatch]);
 
     return (
         <View style={styles.mainContainer}>
-            {ordersList.length === 0 ? (
+            {isLoader ? <LoaderModal isVisible={isLoader} /> : ordersList.length === 0 ? (
                 <Text>No orders available</Text>
             ) : (
                 <FlatList
@@ -41,7 +38,7 @@ const OrdersScreen = () => {
 export default OrdersScreen;
 
 
-const OrderCard = React.memo(({ order }) => {
+const OrderCard = memo(({ order }) => {
     const [expanded, setExpanded] = useState(false);
 
     const toggleExpand = useCallback(() => {
@@ -76,6 +73,7 @@ const OrderCard = React.memo(({ order }) => {
 const styles = StyleSheet.create({
     mainContainer: {
         marginTop: 10,
+        flex: 1,
     }, orderCard: {
         alignSelf: "center",
         width: "95%",

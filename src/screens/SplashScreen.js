@@ -1,8 +1,29 @@
-import { View, Text, Image, StyleSheet } from "react-native";
+import { View, Image, StyleSheet, PermissionsAndroid, Permissions } from "react-native";
 import { StackActions } from '@react-navigation/native';
 import { getLoggedUser } from "../services/StorageUtils";
+import { useEffect } from "react";
+import { getLocation } from "../utils/LocationUtility";
+import { getAddressFromLocation } from "../utils/GeocodingUtility";
+
+
 
 const SplashScreen = ({ navigation }) => {
+
+    useEffect(() => {
+        // const fetchData = async () => {
+        //     try {
+        //         const location = await getLocation();
+        //         const address = await getAddressFromLocation(location.latitude, location.longitude);
+
+        //         console.log('Location:', location);
+        //         console.log('Address:', address);
+        //     } catch (error) {
+        //         console.error('Error:', error);
+        //     }
+        // };
+
+        // fetchData();
+    }, [])
 
     setTimeout(async function () {
         await getLoggedUser().then((value) => {

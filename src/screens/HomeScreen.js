@@ -28,7 +28,6 @@ function HomeScreen({ navigation }) {
     const categoryData = data?.data?.categories || [];
 
     useEffect(() => {
-        console.log("useEffectBro => " + isLoader)
         getLoggedUser().then((userId) => {
             console.log(userId)
             dispatch(home({ userId }))

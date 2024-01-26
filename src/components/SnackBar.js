@@ -1,10 +1,11 @@
-import * as React from 'react';
+
 import { View, StyleSheet } from 'react-native';
 import { Snackbar } from 'react-native-paper';
 import Colors from '../utils/Colors';
+import { useState } from 'react';
 
 const SnackBar = ({ checkVisible, message }) => {
-  const [visible, setVisible] = React.useState(checkVisible);
+  const [visible, setVisible] = useState(checkVisible);
 
   const onDismissSnackBar = () => setVisible(false);
 

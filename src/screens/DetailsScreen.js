@@ -114,6 +114,7 @@ const styles = StyleSheet.create({
     },
     product_title_text: {
         fontSize: 18,
+        fontWeight:"bold",
         lineHeight: 22,
     },
     product_sub_title_text: {

@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { getLoggedUser } from '../services/StorageUtils'
 import ProgressBar from '../components/ProgressBar';
 import { profile } from '../repositories/apiRepo';
+import LoaderModal from '../components/Loader';
 
 
 const ProfileScreen = ({ navigation }) => {
@@ -17,6 +18,7 @@ const ProfileScreen = ({ navigation }) => {
         getLoggedUser().then((userId) => {
             dispatch(profile({ userId: userId }))
         })
+        console.log(" test data ==> " + isLoader + " DATA ==> " + data)
     }, [dispatch])
 
     const userProfile = {
@@ -46,18 +48,7 @@ const ProfileScreen = ({ navigation }) => {
 
     return (
         <View style={styles.container}>
-            <Modal
-                transparent
-                animationType="slide"
-                visible={isLoader}
-                onRequestClose={() => { }}
-            >
-                <View style={styles.loaderContainer}>
-                    <View style={styles.loaderSquare}>
-                        <ActivityIndicator size="large" color="skyblue" />
-                    </View>
-                </View>
-            </Modal>
+            <LoaderModal isVisible={isLoader} />
             {/* Top Profile Section */}
             {<View style={styles.topProfileSection}>
                 <TouchableOpacity onPress={() => { }}>
@@ -120,20 +111,6 @@ const styles = StyleSheet.create({
         flex: 1,
         textAlign: 'right',
         color: 'white',
-    },
-    loaderContainer: {
-        flex: 1,
-
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    loaderSquare: {
-        width: 100,
-        height: 100,
-        backgroundColor: 'white',
-        borderRadius: 10,
-        justifyContent: 'center',
-        alignItems: 'center',
     },
 });
 

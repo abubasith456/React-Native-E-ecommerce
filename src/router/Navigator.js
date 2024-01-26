@@ -17,14 +17,18 @@ import ProductDetailsScreen from '../screens/DetailsScreen'
 import ProductScreen from "../screens/ProductsScreen";
 import ProfileScreen from "../screens/ProfileScreen"
 import OrdersScreen from "../screens/OrdersListscrean";
+// import WelcomeScreen from "../screens/WelcomeScreen";
 
 
 
-const Stack = createNativeStackNavigator();
-const loggedIn = ""
-export const RootStack = () => {
+export default function RootStack() {
+
+    const Stack = createNativeStackNavigator();
+
     return (
-        <Stack.Navigator initialRouteName="Splash">
+        <Stack.Navigator initialRouteName="Splash" screenOptions={{
+            headerBackTitleVisible: false
+        }}>
             <Stack.Screen
                 name="Splash"
                 component={Splash}
@@ -65,6 +69,9 @@ export const RootStack = () => {
             <Stack.Screen name="Orders" component={OrdersScreen} options={{
 
             }} />
+            {/* <Stack.Screen name="Welcome" component={WelcomeScreen} options={{
+                headerShown: false,
+            }} /> */}
             {/* <Stack.Screen name="Home" component={Home} options={{
                 headerStyle: {
                     backgroundColor: '#3498db', // Set the background color of the app bar

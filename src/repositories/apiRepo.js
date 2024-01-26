@@ -118,7 +118,7 @@ export const orders = createAsyncThunk('orders', async (payload) => {
     console.log(payload);
     const userId = payload.userId
     try {
-        const response = await axiosInstance.get(`/orders?unique_id=${userId}`, {
+        const response = await axiosInstance.get(`/orders/${userId}`, {
             responseType: 'arraybuffer',
         });
 

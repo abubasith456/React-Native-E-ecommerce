@@ -1,4 +1,4 @@
-package com.mydemoproject
+package com.hayat.dev
 
 import com.facebook.react.ReactActivity
 import com.facebook.react.ReactActivityDelegate
