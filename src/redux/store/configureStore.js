@@ -9,6 +9,8 @@ import home from '../slice/home';
 import products from '../slice/products';
 import profileSlice from '../slice/profileSlice'
 import ordersSlice from '../slice/ordersSlice';
+import placeOrderSlice from '../slice/placeOrderSlice'
+
 
 
 export const store = configureStore({
@@ -22,6 +24,7 @@ export const store = configureStore({
     home: home,
     products: products,
     profile: profileSlice,
-    orders: ordersSlice
+    orders: ordersSlice,
+    placeOrder: placeOrderSlice,
   },
 });

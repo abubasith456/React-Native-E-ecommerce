@@ -17,6 +17,7 @@ import { home } from '../repositories/apiRepo';
 const { width } = Dimensions.get('window');
 import { getLoggedUser } from '../services/StorageUtils'
 import ShowDialog from '../components/Dailog';
+import LoaderModal from '../components/Loader';
 
 function HomeScreen({ navigation }) {
 
@@ -53,15 +54,11 @@ function HomeScreen({ navigation }) {
         setVisible(false)
     }
 
-    if (isLoader) {
-        return null
-    }
-
     return (
         <SafeAreaView style={styles.container}>
             {visible ? <ShowDialog message={data.message} onPress={onDialogPressed} /> : null}
-            {/* Restaurants */}
-            <FlatList
+            {/* Home */}
+            {isLoader ? <LoaderModal isVisible={true} /> : <FlatList
                 keyExtractor={item => item.id}
                 data={restaurantData}
                 renderItem={({ item }) => (
@@ -120,7 +117,7 @@ function HomeScreen({ navigation }) {
                         </Text>
                     </>
                 }
-            />
+            />}
         </SafeAreaView>
     );
 };

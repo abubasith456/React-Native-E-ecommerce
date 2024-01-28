@@ -16,6 +16,7 @@ import ShowDialog from '../components/Dailog'
 import { resetState } from '../redux/loginRedux/loginSlice'
 import { loggedInUser } from '../services/StorageUtils'
 import { TextInput as PaperTextInput, IconButton } from 'react-native-paper';
+import { insertUserData } from '../repositories/localRepo'
 
 const LoginScreen = ({ navigation }) => {
     const [email, setEmail] = useState({ value: '', error: '' })
@@ -32,10 +33,19 @@ const LoginScreen = ({ navigation }) => {
             if (data.status == 200) {
                 const userId = data.userData.user_id
                 loggedInUser(userId.toString());
-                dispatch(resetState())
+                const userData = {
+                    user_id: userId,
+                    username: data.userData.username,
+                    email: data.userData.email,
+                    dateOfBirth: data.userData.dateOfBirth,
+                    mobileNumber: data.userData.mobileNumber,
+                    role: data.userData.role,
+                };
+                insertUserData(userData);
+                dispatch(resetState());
                 navigation.reset({
                     index: 0,
-                    routes: [{ name: 'TabNavigator' }],
+                    routes: [{ name: 'Home' }],
                 })
             } else {
                 setVisible(true)

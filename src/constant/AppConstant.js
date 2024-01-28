@@ -7,6 +7,25 @@ export const OUTPUT_RANGE_END = 0;
 export const ANIMATION_TO_VALUE = 1;
 export const ANIMATION_DURATION = 25000;
 
+export const myFcmToken = {
+    _myValue: "a",
+
+    // Getter method
+    get myValue() {
+        console.log('Getting myValue');
+        return this._myValue;
+    },
+
+    // Setter method
+    set myValue(newValue) {
+        console.log('Setting myValue');
+        if (newValue !== "") {
+            this._myValue = newValue;
+        }
+    },
+};
+
+
 export const menuData = [
     {
         id: '1',

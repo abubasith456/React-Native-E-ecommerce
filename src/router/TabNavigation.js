@@ -12,15 +12,15 @@ import { MenuScreen } from '../screens/MenuScreen';
 
 const Tab = createBottomTabNavigator();
 
-const TabNavigator = () => {
+const HomeScreen = () => {
     const navigation = useNavigation();
     return (
         <Tab.Navigator screenOptions={({ route }) => ({
             tabBarIcon: ({ focused, color, size }) => {
                 let iconName;
-                if (route.name === 'Home') {
+                if (route.name === 'HomeTab') {
                     iconName = focused ? faHome : faHomeAlt;
-                } else if (route.name === 'Menu') {
+                } else if (route.name === 'MenuTab') {
                     iconName = focused ? faList : faListCheck;
                 }
 
@@ -31,11 +31,11 @@ const TabNavigator = () => {
             tabBarInactiveTintColor: 'gray',
         })}
         >
-            <Tab.Screen key="1" name="Home" component={Home} options={{
+            <Tab.Screen key="1" name="HomeTab" component={Home} options={{
                 headerShown: false,
             }} />
 
-            <Tab.Screen key="2" name="Menu" component={MenuScreen} options={{
+            <Tab.Screen key="2" name="MenuTab" component={MenuScreen} options={{
                 headerStyle: {
                     backgroundColor: '#3498db', // Set the background color of the app bar
                 },
@@ -49,7 +49,7 @@ const TabNavigator = () => {
     );
 };
 
-export default TabNavigator;
+export default HomeScreen;
 
 const styles = StyleSheet.create({
     button: {

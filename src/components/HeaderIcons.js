@@ -1,10 +1,12 @@
-import { Image, StyleSheet, Text, View } from "react-native";
+import { Alert, Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import React from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-import { faMapLocation, faSearch, faListCheck, faSignOutAlt, faDoorOpen, faPerson } from '@fortawesome/free-solid-svg-icons';
-
+import { faMapLocation, faCartShopping } from '@fortawesome/free-solid-svg-icons';
+import { CommonActions } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 
 const HeaderIcon = () => {
+    const navigation = useNavigation();
     return (
         <View style={styles.container}>
             <FontAwesomeIcon icon={faMapLocation} size={25} />
@@ -16,7 +18,14 @@ const HeaderIcon = () => {
 
             {/* actions */}
             <View style={styles.actionBtns}>
-                <FontAwesomeIcon icon={faSearch} size={25} />
+                <TouchableOpacity onPress={() => {
+                    console.log("CAN GO BACK? => " + navigation.canGoBack())
+                    navigation.navigate(
+                        "Cart"
+                    )
+                }}>
+                    <FontAwesomeIcon icon={faCartShopping} size={20} />
+                </TouchableOpacity>
             </View>
             <Image
                 source={{

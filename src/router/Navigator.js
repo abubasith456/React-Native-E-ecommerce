@@ -1,16 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Splash from "../screens/SplashScreen"
 import Login from "../screens/LoginScreen"
 import SignUp from "../screens/SignUpScreen"
 import Forgot from "../screens/ForgotPasswordScreen"
 import OTP from "../screens/OTPVerificationScren"
-// import Home from "../screens/HomeScreen";
-// import Details from "../screens/ProductDetailsScreen"
 import { Button, StyleSheet } from 'react-native'
-import { useNavigation } from '@react-navigation/native';
-import TabNavigator from "./TabNavigation";
-// import { getLoggedUser } from "../services/StorageUtils";
+import HomeScreen from "./TabNavigation";
 import UpdatePasswordScreen from "../screens/UpdatePassword";
 import BannerScreen from "../screens/BannerScreen";
 import ProductDetailsScreen from '../screens/DetailsScreen'
@@ -18,6 +14,7 @@ import ProductScreen from "../screens/ProductsScreen";
 import ProfileScreen from "../screens/ProfileScreen"
 import OrdersScreen from "../screens/OrdersListscrean";
 // import WelcomeScreen from "../screens/WelcomeScreen";
+import CartScreen from "../screens/CartScreen";
 
 
 
@@ -45,7 +42,7 @@ export default function RootStack() {
             <Stack.Screen name="Forgot" component={Forgot} options={{
                 headerShown: false,
             }} />
-            <Stack.Screen name="TabNavigator" component={TabNavigator} options={{
+            <Stack.Screen name="Home" component={HomeScreen} options={{
                 headerShown: false,
             }} />
             <Stack.Screen name="Banner" component={BannerScreen} options={{
@@ -67,6 +64,9 @@ export default function RootStack() {
 
             }} />
             <Stack.Screen name="Orders" component={OrdersScreen} options={{
+
+            }} />
+            <Stack.Screen name="Cart" component={CartScreen} options={{
 
             }} />
             {/* <Stack.Screen name="Welcome" component={WelcomeScreen} options={{

@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { TextDecoder } from 'text-encoding';
+import { myFcmToken } from '../constant/AppConstant';
 
 const base_url = "https://hayat-shop.onrender.com"
 const axiosInstance = axios.create({ baseURL: base_url })
@@ -88,6 +89,15 @@ export const getBanners = createAsyncThunk('banner', async () => {
 export const home = createAsyncThunk('home', async (payload) => {
     console.log(payload.userId)
     const userId = payload.userId
+    const fcmData = {
+        "unique_id": userId,
+        "pushToken": myFcmToken._myValue
+    }
+    axiosInstance.post("/fcm/pushToken", fcmData).then((result) => {
+        console.log("Push Token pushed");
+    }).catch((err) => {
+        console.log(err);
+    })
     const res = await axiosInstance.get("/home?id=" + userId);
     const response = await res.data;
     console.log("TEST =>" + JSON.stringify(response))
@@ -132,4 +142,13 @@ export const orders = createAsyncThunk('orders', async (payload) => {
         console.error('Error fetching data:', error);
         throw error; // Re-throw the error to be caught by the rejected action
     }
+});
+
+export const placeOrder = createAsyncThunk('placeOrder', async (payload) => {
+    const requesstData = payload.orders;
+    const res = await axiosInstance.post('/orders', requesstData);
+    console.log("ORDER =>" + JSON.stringify(res));
+    const response = await res.data;
+    console.log("ORDER =>" + JSON.stringify(response))
+    return response;
 });

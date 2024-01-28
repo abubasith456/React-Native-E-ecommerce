@@ -1,7 +1,8 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, { useEffect } from 'react';
-import { StyleSheet, View, Text, Image, TouchableOpacity, ScrollView, Sa } from 'react-native';
+import { StyleSheet, View, Text, Image, TouchableOpacity, ScrollView, Sa, Alert } from 'react-native';
 import FastImage from 'react-native-fast-image'
+import { addCartItem } from '../repositories/localRepo';
 
 const ProductDetails = ({ route, navigation }) => {
     var { id, name, img, type, price, description } = route.params;
@@ -61,13 +62,15 @@ const ProductDetails = ({ route, navigation }) => {
                     }}>
                     <TouchableOpacity
                         onPress={() => {
-                            // navigation.navigate('Cart', {
-                            //     id: id,
-                            //     name: name,
-                            //     img: img,
-                            //     type: type,
-                            //     price: price,
-                            // });
+                            const data = [{ productId: id, name: name, image: img, quantity: "1" }
+                            ]
+                            addCartItem(data, (response) => {
+                                if (response.success) {
+                                    Alert.alert("Done!", response.message);
+                                } else {
+                                    Alert.alert("Alert!", response.message);
+                                }
+                            });
                         }}>
                         <Text style={styles.big_button_text}>
                             ADD TO BAG
@@ -84,13 +87,16 @@ const ProductDetails = ({ route, navigation }) => {
                     }}>
                     <TouchableOpacity
                         onPress={() => {
-                            // navigation.navigate('Cart', {
-                            //     id: id,
-                            //     name: name,
-                            //     img: img,
-                            //     type: type,
-                            //     price: price,
-                            // });
+                            const data = [{
+                                productId: id, name: name, image: img, quantity: "1"
+                            }]
+                            addCartItem(data, (response) => {
+                                if (response.success) {
+                                    navigation.navigate("Cart")
+                                } else {
+                                    Alert.alert("Alert!", response.message);
+                                }
+                            });
                         }}>
                         <Text style={styles.big_button_text}>
                             BUY NOW
@@ -114,7 +120,7 @@ const styles = StyleSheet.create({
     },
     product_title_text: {
         fontSize: 18,
-        fontWeight:"bold",
+        fontWeight: "bold",
         lineHeight: 22,
     },
     product_sub_title_text: {
