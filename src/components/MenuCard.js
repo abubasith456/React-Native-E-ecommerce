@@ -47,7 +47,7 @@ const ChatTileCard = ({ icon, data, onPress }) => {
       <ChatCardContainer>
         <FontAwesomeIcon icon={getIcons(icon)} size={32} />
         <ContentContainer>
-          <Text>{data}</Text>
+          <Text style={{ color: "black" }}>{data}</Text>
         </ContentContainer>
       </ChatCardContainer>
     </Pressable>

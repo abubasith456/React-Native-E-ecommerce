@@ -26,7 +26,7 @@ const DishComponent = (props) => {
                     }}
                     resizeMode={FastImage.resizeMode.contain}
                 />
-                <Text style={styles.name}>{name}</Text>
+                <Text style={styles.dishName}>{name}</Text>
             </View>
         </Pressable>
     );

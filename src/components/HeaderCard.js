@@ -21,7 +21,6 @@ const ItemsCard = (props) => {
 
     const navigation = useNavigation();
 
-    console.log("called===>" + image)
 
     return (
         <Pressable
@@ -154,6 +153,7 @@ const styles = StyleSheet.create({
         alignSelf: "center",
         borderTopLeftRadius: 20,
         borderTopRightRadius: 20,
+        margin: 20,
         resizeMode: FastImage.resizeMode.center
     },
     vegContainer: {
@@ -222,11 +222,13 @@ const styles = StyleSheet.create({
         padding: 10,
     },
     restaurantDetails: {
+        color: "black",
         flexDirection: "row",
         alignItems: "center",
         justifyContent: "space-between",
     },
     restaurantName: {
+        color: "black",
         fontSize: 18,
         fontWeight: "500",
         textTransform: "capitalize",

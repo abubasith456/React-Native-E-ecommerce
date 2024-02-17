@@ -15,6 +15,8 @@ import ProfileScreen from "../screens/ProfileScreen"
 import OrdersScreen from "../screens/OrdersListscrean";
 // import WelcomeScreen from "../screens/WelcomeScreen";
 import CartScreen from "../screens/CartScreen";
+import AddressScreen from "../screens/AddressScreen";
+import OrderSummaryScreen from "../screens/OrderSummeryScreen";
 
 
 
@@ -67,6 +69,12 @@ export default function RootStack() {
 
             }} />
             <Stack.Screen name="Cart" component={CartScreen} options={{
+
+            }} />
+            <Stack.Screen name="Address" component={AddressScreen} options={{
+
+            }} />
+            <Stack.Screen name="OrderSummery" component={OrderSummaryScreen} options={{
 
             }} />
             {/* <Stack.Screen name="Welcome" component={WelcomeScreen} options={{

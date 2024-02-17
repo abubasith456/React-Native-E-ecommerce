@@ -39,6 +39,11 @@ export const menuData = [
     },
     {
         id: '3',
+        icon: 'Address',
+        text: 'Addresses',
+    },
+    {
+        id: '4',
         icon: 'exit',
         text: 'Logout',
     },

@@ -7,7 +7,7 @@ import OrderAgainComponent from '../components/OrderAgainComponent';
 import { restaurantData } from '../constant/dish';
 import HeaderIcon from '../components/HeaderIcons';
 import Category from '../components/Categories';
-import DishComponentContainer from '../components/DishComponentContainer';
+import CategoriesContainer from '../components/DishComponentContainer';
 import FeaturedRestaurantsContainer from '../components/product/productsContainer';
 import Banner from '../components/Banner';
 import { generateColor } from '../utils/Colors';
@@ -61,23 +61,22 @@ function HomeScreen({ navigation }) {
             {isLoader ? <LoaderModal isVisible={true} /> : <FlatList
                 keyExtractor={item => item.id}
                 data={restaurantData}
-                renderItem={({ item }) => (
-                    <ItemsCard
-                        image={item.image}
-                        restaurant={item.restaurant}
-                        duration={item.duration}
-                        distance={item.distance}
-                        bill={item.bill}
-                        rating={item.rating}
-                        discount={item.discount}
-                        isVeg={item.isVeg}
-                        totalOrder={item.totalOrder}
-                        cuisines={item.cuisines}
-                    />
-                )}
+                // renderItem={({ item }) => (
+                //     <ItemsCard
+                //         image={item.image}
+                //         restaurant={item.restaurant}
+                //         duration={item.duration}
+                //         distance={item.distance}
+                //         bill={item.bill}
+                //         rating={item.rating}
+                //         discount={item.discount}
+                //         isVeg={item.isVeg}
+                //         totalOrder={item.totalOrder}
+                //         cuisines={item.cuisines}
+                //     />
+                // )}
                 showsVerticalScrollIndicator={false}
                 ListHeaderComponent={
-
                     <>
                         {/* header */}
                         <HeaderIcon />
@@ -108,13 +107,13 @@ function HomeScreen({ navigation }) {
                         </View>
                         {/* order again */}
                         {/* <OrderAgainComponent /> */}
-                        {/* dishes */}
-                        <DishComponentContainer categories={categoryData} />
+                        {/* Categories */}
+                        <CategoriesContainer categories={categoryData} />
                         {/* Featured restaurants */}
-                        <FeaturedRestaurantsContainer />
+                        {/* <FeaturedRestaurantsContainer />
                         <Text style={styles.restaurantCardHeading}>
                             {restaurantData.length * 30} restaurants around you
-                        </Text>
+                        </Text> */}
                     </>
                 }
             />}

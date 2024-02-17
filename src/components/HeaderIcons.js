@@ -46,6 +46,7 @@ const styles = StyleSheet.create({
         alignSelf: "center",
         alignItems: "center",
         justifyContent: "space-between",
+        marginTop: Platform.OS === "android" ? 5 : 0,
         paddingBottom: 5,
     },
     locationContainer: {

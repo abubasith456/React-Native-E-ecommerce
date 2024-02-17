@@ -3,6 +3,7 @@ import React, { useEffect } from 'react';
 import { StyleSheet, View, Text, Image, TouchableOpacity, ScrollView, Sa, Alert } from 'react-native';
 import FastImage from 'react-native-fast-image'
 import { addCartItem } from '../repositories/localRepo';
+import { theme } from '../theme/Theme';
 
 const ProductDetails = ({ route, navigation }) => {
     var { id, name, img, type, price, description } = route.params;
@@ -122,10 +123,12 @@ const styles = StyleSheet.create({
         fontSize: 18,
         fontWeight: "bold",
         lineHeight: 22,
+        color: theme.colors.text,
     },
     product_sub_title_text: {
         fontSize: 16,
         lineHeight: 22,
+        color: theme.colors.text,
     },
     box_shadow: {
         shadowColor: '#000',
@@ -145,7 +148,7 @@ const styles = StyleSheet.create({
     },
     big_button_text: { fontSize: 18, lineHeight: 60, color: "black" },
     checkout_btn_text: {
-
+        color: "#fff",
         fontSize: 24,
         lineHeight: 60,
     },

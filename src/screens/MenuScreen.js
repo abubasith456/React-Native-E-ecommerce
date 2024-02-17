@@ -17,6 +17,8 @@ export const MenuScreen = ({ navigation }) => {
                 navigation.navigate("Profile")
             } else if (item.id == 2) {
                 navigation.navigate("Orders")
+            } else if (item.id == 3) {
+                navigation.navigate("Address")
             } else {
                 setIsDialogShow(true)
             }

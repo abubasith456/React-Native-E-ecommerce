@@ -5,7 +5,7 @@ import { dishes } from "../constant/dish";
 
 
 
-const DishComponentContainer = (categories) => {
+const CategoriesContainer = (categories) => {
     const temp = JSON.stringify(categories.categories)
     const categoryData = JSON.parse(temp)
     console.log(categoryData)
@@ -27,7 +27,7 @@ const DishComponentContainer = (categories) => {
     );
 };
 
-export default DishComponentContainer;
+export default CategoriesContainer;
 
 const styles = StyleSheet.create({
     container: {
@@ -38,6 +38,7 @@ const styles = StyleSheet.create({
     heading: {
         fontSize: 18,
         fontWeight: "bold",
+        color: "black",
     },
     dishes: {
         flexDirection: "row",

@@ -4,7 +4,7 @@ import { getLoggedUser } from "../services/StorageUtils";
 import { useEffect, useState } from "react";
 import { getLocation } from "../utils/LocationUtility";
 import { getAddressFromLocation } from "../utils/GeocodingUtility";
-import { createTable, getUserData } from "../repositories/localRepo";
+import { initializeAsyncStorage, getUserData } from "../repositories/localRepo";
 
 
 
@@ -14,7 +14,6 @@ const SplashScreen = ({ navigation }) => {
 
     useEffect(() => {
 
-        createTable();
         getUserData(setUserData);
         
         const fetchData = async () => {

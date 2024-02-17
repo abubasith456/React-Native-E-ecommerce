@@ -7,9 +7,10 @@ import { useSelector, useDispatch } from 'react-redux'
 import { placeOrder } from '../repositories/apiRepo';
 import LoaderModal from '../components/Loader';
 import { resetPlaceOrderState } from '../redux/slice/placeOrderSlice';
+import { theme } from '../theme/Theme';
 
 
-const CartScreen = () => {
+const CartScreen = ({ navigation }) => {
     const [cartItems, setCartItems] = useState([]);
     const [userId, setUserId] = useState("");
     const dispatch = useDispatch();
@@ -53,38 +54,52 @@ const CartScreen = () => {
 
     const handleDeleteItem = (id) => {
         // Delete an item from the cart
-        deleteItem(id);
-        // Reload cart items after deletion
-        loadCartItems();
+        deleteItem(id, () => {
+            // Reload cart items after deletion
+            loadCartItems();
+        });
     };
 
     const handlePlaceOrder = () => {
-        showConfirmationAlert(
-            'Place Order',
-            'Are you sure you want to place the order?',
-            "Yes",
-            "NO",
-            () => {
-                const orders = {
-                    "unique_id": userId,
-                    "numOfItems": cartItems.length,
-                    "user_id": userId,
-                    "user_name": "Abu",
-                    "products": cartItems,
-                    "amount": 10000,
-                    "address": "kjascakjsbcjksa"
-                }
-                dispatch(placeOrder({ orders: orders }));
-            },
-            () => { }
-        );
+        const orders = {
+            "unique_id": userId,
+            "numOfItems": cartItems.length,
+            "user_id": userId,
+            "user_name": "Abu",
+            "products": cartItems,
+            "amount": 10000,
+        }
+        navigation.navigate('OrderSummery', {
+            cartItems: orders
+        });
+        // showConfirmationAlert(
+        //     'Place Order',
+        //     'Are you sure you want to place the order?',
+        //     "Yes",
+        //     "NO",
+        //     () => {
+        //         const orders = {
+        //             "unique_id": userId,
+        //             "numOfItems": cartItems.length,
+        //             "user_id": userId,
+        //             "user_name": "Abu",
+        //             "products": cartItems,
+        //             "amount": 10000,
+        //             "address": "kjascakjsbcjksa"
+        //         }
+
+
+        //         // dispatch(placeOrder({ orders: orders }));
+        //     },
+        //     () => { }
+        // );
     };
 
     const renderItem = ({ item }) => (
         <View style={styles.itemContainer}>
-            <Image source={{ uri: item.productImage }} style={styles.itemImage} />
+            <Image source={{ uri: item.image }} style={styles.itemImage} />
             <View style={styles.itemDetails}>
-                <Text style={styles.itemName}>{item.productName}</Text>
+                <Text style={styles.itemName}>{item.name}</Text>
                 <Text style={styles.itemQuantity}>Quantity: {item.quantity}</Text>
                 <TouchableOpacity onPress={() => handleDeleteItem(item.id)} style={styles.deleteButton}>
                     <Text style={styles.deleteButtonText}>Delete</Text>
@@ -98,7 +113,7 @@ const CartScreen = () => {
             <LoaderModal isVisible={isLoader} />
             {cartItems.length == 0 ?
                 <View style={styles.noItemText}>
-                    <Text> No items added yet!</Text>
+                    <Text style={{ color: "black" }}> No items added yet!</Text>
                 </View> : null
             }
 
@@ -128,7 +143,8 @@ const styles = StyleSheet.create({
     noItemText: {
         flex: 1,
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
+
     },
     itemContainer: {
         flexDirection: 'row',
@@ -151,6 +167,7 @@ const styles = StyleSheet.create({
         fontSize: 18,
         fontWeight: 'bold',
         marginBottom: 4,
+        color: theme.colors.text,
     },
     itemQuantity: {
         fontSize: 16,

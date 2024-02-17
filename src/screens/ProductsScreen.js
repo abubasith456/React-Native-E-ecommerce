@@ -34,15 +34,9 @@ export default function ProductScreen({ route, navigation }) {
         }
     }, [])
 
-
-    function onDialogPressed() {
-        setVisible(false)
-    }
-
     return (
         <SafeAreaView style={styles.container}>
             {isLoader ? <Progress isLoading={isLoader} /> : null}
-            {visible ? <ShowDialog onPress={onDialogPressed} /> : null}
             {productData.size != [] ? <FlatList
                 keyExtractor={item => item._id}
                 data={data?.data == undefined ? data?.products : productData}
@@ -60,17 +54,13 @@ export default function ProductScreen({ route, navigation }) {
 
         </SafeAreaView >
     )
-
-    function goBack() {
-        navigation.dispatch(CommonActions.goBack())
-    }
 }
 
 const styles = StyleSheet.create({
     container: {
         backgroundColor: "#fff",
         flex: 1,
-        paddingTop: Platform.OS === "android" ? 50 : 0,
+        // paddingTop: Platform.OS === "android" ? 10 : 0,
     },
     row: {
         flexDirection: 'row',
