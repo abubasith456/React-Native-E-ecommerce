@@ -109,14 +109,14 @@ const LoginScreen = ({ navigation }) => {
                     onChangeText={(text) => setPassword({ value: text, error: '' })}
                     error={!!password.error}
                     errorText={password.error}
-                    secureTextEntry={showPassword}
-                    right={
-                        <PaperTextInput.Icon
-                            style={styles.passwordRightIcon}
-                            name={showPassword ? 'eye-off' : 'eye'}
-                            onPress={togglePasswordVisibility}
-                        />
-                    }
+                    secureTextEntry={true}
+                    // right={
+                    //     <PaperTextInput.Icon
+                    //         style={styles.passwordRightIcon}
+                    //         name={showPassword ? 'eye-off' : 'eye'}
+                    //         onPress={togglePasswordVisibility}
+                    //     />
+                    // }
                 />
                 <View style={styles.forgotPassword}>
                     <TouchableOpacity
