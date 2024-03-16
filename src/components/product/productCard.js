@@ -1,11 +1,11 @@
 import { Image, Pressable, StyleSheet, Text, View } from "react-native";
 import React from "react";
-import {
-    FontAwesome,
-    MaterialCommunityIcons,
-    Feather,
-    Entypo,
-} from "@expo/vector-icons";
+// import {
+//     FontAwesome,
+//     MaterialCommunityIcons,
+//     Feather,
+//     Entypo,
+// } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 
 
@@ -38,7 +38,7 @@ export default ProductCard = (props) => {
         >
             {/* like */}
             <View style={styles.likeContainer}>
-                <Feather name="heart" size={16} color="#FC7D86" />
+                {/* <Feather name="heart" size={16} color="#FC7D86" /> */}
             </View>
             <Image
                 source={{
@@ -50,7 +50,7 @@ export default ProductCard = (props) => {
             {/* veg */}
             {isVeg && (
                 <View style={styles.vegContainer}>
-                    <MaterialCommunityIcons name="leaf" size={13} color="green" />
+                    {/* <MaterialCommunityIcons name="leaf" size={13} color="green" /> */}
                     <Text style={styles.vegText}>pure veg</Text>
                 </View>
             )}
@@ -68,7 +68,7 @@ export default ProductCard = (props) => {
                     <View style={styles.ratingContainer}>
                         {/* rating */}
                         <Text style={styles.rating}>{rating}</Text>
-                        <FontAwesome name="star" size={10} color="#fff" />
+                        {/* <FontAwesome name="star" size={10} color="#fff" /> */}
                     </View>
                 </View>
                 <View style={styles.orderInfo}>
@@ -78,7 +78,7 @@ export default ProductCard = (props) => {
                     />
                     {/* delivery stats */}
                     <Text style={styles.time}>{duration} min</Text>
-                    <Entypo name="dot-single" size={10} color="#282828" />
+                    {/* <Entypo name="dot-single" size={10} color="#282828" /> */}
                     <Text style={styles.time}>{distance} km</Text>
                 </View>
                 <View style={styles.billInfo}>
@@ -92,7 +92,7 @@ export default ProductCard = (props) => {
                             borderRadius: 6,
                         }}
                     >
-                        <FontAwesome name="rupee" size={10} color="#fff" />
+                        {/* <FontAwesome name="rupee" size={10} color="#fff" /> */}
                     </View>
                     {/* bill */}
                     <Text style={styles.bill}>{bill} for one</Text>
@@ -102,11 +102,11 @@ export default ProductCard = (props) => {
             {/* discount */}
             {discount && (
                 <View style={styles.discountContainer}>
-                    <MaterialCommunityIcons
+                    {/* <MaterialCommunityIcons
                         name="brightness-percent"
                         size={12}
                         color="#0059E4"
-                    />
+                    /> */}
                     <Text style={styles.discount}>{discount}% off</Text>
                 </View>
             )}

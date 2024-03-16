@@ -54,7 +54,7 @@ export const menuData = [
 
 import { Image, Pressable, StyleSheet, Text, View } from "react-native";
 import React, { useState } from "react";
-import { Feather, MaterialCommunityIcons, Entypo } from "@expo/vector-icons";
+// import { Feather, MaterialCommunityIcons, Entypo } from "@expo/vector-icons";
 
 const Dish = (props) => {
     const [quantity, setQuantity] = useState(0);
@@ -102,11 +102,11 @@ const Dish = (props) => {
         <Pressable style={styles.container} onPress={openDishModal}>
             <View style={styles.dishInfo}>
                 <View style={styles.veg}>
-                    <MaterialCommunityIcons
+                    {/* <MaterialCommunityIcons
                         name="square-rounded"
                         size={20}
                         color="#259547"
-                    />
+                    /> */}
                     {isBestSeller && (
                         <View style={styles.bestSellerContainer}>
                             <Text style={styles.bestSellerText}>bestseller</Text>
@@ -119,17 +119,18 @@ const Dish = (props) => {
                     <View style={styles.ratingContainer}>
                         {[1, 2, 3, 4, 5].map((item, index) => {
                             if (item <= rating) {
-                                return (
-                                    <Entypo name="star" size={14} color="#F5C033" key={index} />
+                                return (null
+                                    // <Entypo name="star" size={14} color="#F5C033" key={index} /> 
                                 );
                             } else {
                                 return (
-                                    <Entypo
-                                        name="star-outlined"
-                                        size={14}
-                                        color="lightgray"
-                                        key={index}
-                                    />
+                                    null
+                                    // <Entypo
+                                    //     name="star-outlined"
+                                    //     size={14}
+                                    //     color="lightgray"
+                                    //     key={index}
+                                    // />
                                 );
                             }
                         })}
@@ -154,24 +155,24 @@ const Dish = (props) => {
                 {quantity === 0 ? (
                     <Pressable style={styles.btnContainer} onPress={addItem}>
                         <Text style={styles.btnText}>add</Text>
-                        <Feather
+                        {/* <Feather
                             name="plus"
                             size={13}
                             color="#E94657"
                             style={{ position: "absolute", right: 3, top: 3 }}
-                        />
+                        /> */}
                     </Pressable>
                 ) : (
                     <View style={styles.quantityContainer}>
                         {/* add */}
                         <Pressable style={styles.quantityBtn} onPress={deleteItem}>
-                            <Entypo name="minus" size={16} color="#fff" />
+                            {/* <Entypo name="minus" size={16} color="#fff" /> */}
                         </Pressable>
                         {/* quantity */}
                         <Text style={styles.quantity}>{quantity}</Text>
                         {/* remove */}
                         <Pressable style={styles.quantityBtn} onPress={addItem}>
-                            <Entypo name="plus" size={16} color="#fff" />
+                            {/* <Entypo name="plus" size={16} color="#fff" /> */}
                         </Pressable>
                     </View>
                 )}

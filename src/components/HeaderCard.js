@@ -1,11 +1,11 @@
 import { Image, Pressable, StyleSheet, Text, View } from "react-native";
 import React from "react";
-import {
-    FontAwesome,
-    MaterialCommunityIcons,
-    Feather,
-    Ionicons,
-} from "@expo/vector-icons";
+// import {
+//     FontAwesome,
+//     MaterialCommunityIcons,
+//     Feather,
+//     Ionicons,
+// } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import FastImage from 'react-native-fast-image'
 
@@ -85,7 +85,7 @@ const ItemsCard = (props) => {
                     {rating == 0 ? null : <View style={styles.ratingContainer}>
                         {/* rating */}
                         <Text style={styles.rating}>{rating}</Text>
-                        <FontAwesome name="star" size={10} color="#fff" />
+                        {/* <FontAwesome name="star" size={10} color="#fff" /> */}
                     </View>}
                 </View>
                 <View style={styles.cuisineDetails}>
@@ -105,7 +105,7 @@ const ItemsCard = (props) => {
                 {/* total number of order placed so far */}
                 <View style={styles.rateContainer}>
                     <View style={styles.rateIconContainer}>
-                        <Ionicons name="trending-up" size={9} color="#fff" />
+                        {/* <Ionicons name="trending-up" size={9} color="#fff" /> */}
                     </View>
                     <Text style={styles.rate}>
                         {description}

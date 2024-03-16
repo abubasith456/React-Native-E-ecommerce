@@ -65,7 +65,7 @@ const CartScreen = ({ navigation }) => {
             "unique_id": userId,
             "numOfItems": cartItems.length,
             "user_id": userId,
-            "user_name": "Abu",
+            "user_name": "Test",
             "products": cartItems,
             "amount": 10000,
         }
@@ -97,9 +97,9 @@ const CartScreen = ({ navigation }) => {
 
     const renderItem = ({ item }) => (
         <View style={styles.itemContainer}>
-            <Image source={{ uri: item.image }} style={styles.itemImage} />
+            <Image source={{ uri: item.productImage }} style={styles.itemImage} />
             <View style={styles.itemDetails}>
-                <Text style={styles.itemName}>{item.name}</Text>
+                <Text style={styles.itemName}>{item.productName}</Text>
                 <Text style={styles.itemQuantity}>Quantity: {item.quantity}</Text>
                 <TouchableOpacity onPress={() => handleDeleteItem(item.id)} style={styles.deleteButton}>
                     <Text style={styles.deleteButtonText}>Delete</Text>

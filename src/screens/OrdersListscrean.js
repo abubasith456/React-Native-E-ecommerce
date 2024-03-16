@@ -15,6 +15,7 @@ const OrdersScreen = () => {
         if (isError) {
             //
         }
+        console.log(data);
         getLoggedUser().then((userId) => {
             dispatch(orders({ userId: userId }))
         })

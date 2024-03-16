@@ -70,7 +70,7 @@ const ProductDetails = ({ route, navigation }) => {
                         justifyContent: 'center',
                     }}
                     onPress={() => {
-                        const data = [{ productId: id, name: name, image: img, quantity: "1" }
+                        const data = [{ productId: id, productName: name, productImage: img, quantity: "1" }
                         ]
                         addCartItem(data, (response) => {
                             if (response.success) {
@@ -102,9 +102,8 @@ const ProductDetails = ({ route, navigation }) => {
                         justifyContent: 'center',
                     }}
                     onPress={() => {
-                        const data = [{
-                            productId: id, name: name, image: img, quantity: "1"
-                        }]
+                        const data = [{ productId: id, productName: name, productImage: img, quantity: "1" }
+                        ]
                         addCartItem(data, (response) => {
                             if (response.success) {
                                 navigation.navigate("Cart")
@@ -162,7 +161,7 @@ const styles = StyleSheet.create({
     },
     add_to_bag_btn: { fontSize: 18, lineHeight: 60, color: "black" },
     buy_now_btn: {
-        fontSize: 18, lineHeight: 60, color: "white" 
+        fontSize: 18, lineHeight: 60, color: "white"
     },
 });
 export default ProductDetails;

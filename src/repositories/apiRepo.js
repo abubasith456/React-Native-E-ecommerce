@@ -147,6 +147,7 @@ export const orders = createAsyncThunk('orders', async (payload) => {
 
 export const placeOrder = createAsyncThunk('placeOrder', async (payload) => {
     const requesstData = payload.orders;
+    console.log(requesstData);
     const res = await axiosInstance.post('/orders', requesstData);
     console.log("ORDER =>" + JSON.stringify(res));
     const response = await res.data;

@@ -6,7 +6,6 @@ import ItemsCard from '../components/HeaderCard';
 import OrderAgainComponent from '../components/OrderAgainComponent';
 import { restaurantData } from '../constant/dish';
 import HeaderIcon from '../components/HeaderIcons';
-import Category from '../components/Categories';
 import CategoriesContainer from '../components/DishComponentContainer';
 import FeaturedRestaurantsContainer from '../components/product/productsContainer';
 import Banner from '../components/Banner';

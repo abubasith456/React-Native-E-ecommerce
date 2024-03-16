@@ -27,7 +27,7 @@ const OrderSummaryScreen = ({ route, navigation }) => {
     });
 
     useEffect(() => {
-        console.log(" ==>" + products)
+        console.log(products)
         if (data != null) {
             console.log(" DATA not NUlol ==> " + JSON.stringify(data));
             if (data.success) {
@@ -79,6 +79,7 @@ const OrderSummaryScreen = ({ route, navigation }) => {
                     "amount": 1000,
                     "address": address
                 }
+                console.log(orders);
                 dispatch(placeOrder({ orders: orders }));
             },
             () => { }
