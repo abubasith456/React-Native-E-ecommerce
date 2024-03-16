@@ -137,7 +137,7 @@ const LoginScreen = ({ navigation }) => {
                     Login
                 </Button>
                 <View style={styles.row}>
-                    <Text>Don’t have an account? </Text>
+                    <Text>Don't have an account? </Text>
                     <TouchableOpacity onPress={() => {
                         resetValues();
                         navigation.dispatch(
