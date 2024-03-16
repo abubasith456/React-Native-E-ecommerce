@@ -2,14 +2,17 @@ import React from 'react'
 import { TouchableOpacity, Image, StyleSheet, View, Text } from 'react-native'
 import { getStatusBarHeight } from 'react-native-status-bar-height'
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 
 export default function BackButton({ goBack }) {
     return (
         <TouchableOpacity onPress={goBack} style={styles.container}>
-            <Image
+            <FontAwesomeIcon style={styles.image} icon={faArrowLeft} size={20} />
+            {/* <Image
                 style={styles.image}
                 source={require('../images/arrow_back.png')}
-            />
+            /> */}
         </TouchableOpacity>
     )
 }
@@ -18,9 +21,8 @@ export const BackButtonWithText = ({ navigation, title }) => {
     return (
         <View style={styles.header}>
             <TouchableOpacity onPress={navigation.goBack} style={styles.backButton}>
-                <Ionicons name="arrow-back" size={24} color="black" />
+                <Ionicons name="arrow-back-white" size={24} color="#ffffff" />
             </TouchableOpacity>
-            <Text style={styles.title}>{title}</Text>
         </View>
     );
 }
@@ -28,12 +30,13 @@ export const BackButtonWithText = ({ navigation, title }) => {
 const styles = StyleSheet.create({
     container: {
         position: 'absolute',
-        top: 30 + getStatusBarHeight(),
-        left: 1,
+        top: 10 + getStatusBarHeight(),
+        left: 5,
     },
     image: {
         width: 25,
         height: 25,
+        color: "white"
     },
     header: {
         flexDirection: 'row',
@@ -49,6 +52,7 @@ const styles = StyleSheet.create({
     },
     backButton: {
         marginRight: 8,
+        color: "white",
     },
     backButtonPlaceholder: {
         width: 40, // Width of the back button placeholder to align the title

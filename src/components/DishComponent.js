@@ -14,7 +14,8 @@ const DishComponent = (props) => {
     return (
         <Pressable onPress={() => {
             navigation.navigate("Products", {
-                productName: productName
+                appBarName: name,
+                productName: productName,
             })
         }}>
             <View style={styles.container}>

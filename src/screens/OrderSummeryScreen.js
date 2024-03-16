@@ -2,10 +2,19 @@ import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, Button } from 'react-native';
 import { getAddressById, getDefaultAddressId } from '../services/AsyncStorageUtils';
 import { theme } from '../theme/Theme';
+import { useSelector, useDispatch } from 'react-redux'
+import { deleteAllCartItems } from '../repositories/localRepo';
+import { showConfirmationAlert } from '../components/dialoges/AlertDialogs';
+import { CommonActions, StackActions } from '@react-navigation/native';
+import { placeOrder } from '../repositories/apiRepo';
+import { resetPlaceOrderState } from '../redux/slice/placeOrderSlice';
+import LoaderModal from '../components/Loader';
 
 const OrderSummaryScreen = ({ route, navigation }) => {
 
     const { amount, numOfItems, products, unique_id, user_id, user_name } = route.params.cartItems;
+    const { data, isLoader, isError } = useSelector(state => state.placeOrder);
+    const dispatch = useDispatch();
 
 
     const [address, setAddress] = useState({
@@ -19,6 +28,26 @@ const OrderSummaryScreen = ({ route, navigation }) => {
 
     useEffect(() => {
         console.log(" ==>" + products)
+        if (data != null) {
+            console.log(" DATA not NUlol ==> " + JSON.stringify(data));
+            if (data.success) {
+                showConfirmationAlert(
+                    'Success!',
+                    'Order placed succesfully.',
+                    "OK",
+                    "",
+                    () => {
+                        navigation.dispatch(StackActions.replace("Home"));
+                    },
+                    () => { }
+                );
+                dispatch(resetPlaceOrderState());
+                deleteAllCartItems();
+            } else if (isError) {
+                //
+            }
+        }
+
         const fetchData = async () => {
             getDefaultAddressId().then(async (id) => {
                 const defaultAddress = await getAddressById(id);
@@ -29,17 +58,36 @@ const OrderSummaryScreen = ({ route, navigation }) => {
         };
 
         fetchData();
-    }, []);
+    }, [data, isError]);
 
     const handleConfirmOrder = () => {
         // Perform any necessary actions to confirm the order
-
         // Navigate to the confirmation screen or any desired screen
-        navigation.navigate('OrderConfirmation');
+        // navigation.navigate('OrderConfirmation');
+        showConfirmationAlert(
+            'Place Order',
+            'Are you sure you want to place the order?',
+            "Yes",
+            "NO",
+            () => {
+                const orders = {
+                    "unique_id": unique_id,
+                    "numOfItems": numOfItems,
+                    "user_id": user_id,
+                    "user_name": user_name,
+                    "products": products,
+                    "amount": 1000,
+                    "address": address
+                }
+                dispatch(placeOrder({ orders: orders }));
+            },
+            () => { }
+        );
     };
 
     return (
         <View style={styles.container}>
+            <LoaderModal isVisible={isLoader} />
             {/* <Text style={styles.header}>Order Summary</Text> */}
 
             {/* Shipping Details Section */}
@@ -65,9 +113,10 @@ const OrderSummaryScreen = ({ route, navigation }) => {
             {/* Price Summary Section (Placeholder) */}
             <View style={styles.sectionContainer}>
                 <Text style={styles.sectionTitle}>Price Summary:</Text>
-                <Text style={styles.sectionContent} >Subtotal: $150</Text>
-                <Text style={styles.sectionContent} >Shipping: $10</Text>
-                <Text style={styles.sectionContent} >Total: $160</Text>
+                <Text style={styles.sectionContent} >Subtotal: Rs.150</Text>
+                <Text style={styles.sectionContent} >Shipping: Rs.10</Text>
+                <Text style={styles.sectionContent} >Total: Rs.160</Text>
+                <Text style={styles.sectionContent} >*This will be modified based on the customer</Text>
                 {/* Display actual price summary based on your data */}
             </View>
 

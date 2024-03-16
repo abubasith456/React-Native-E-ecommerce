@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react'
-import { StyleSheet, V } from 'react-native'
+import { StyleSheet, View } from 'react-native'
 import { CommonActions } from '@react-navigation/native';
 import { Text } from 'react-native-paper'
 import Background from '../components/Background'
@@ -8,11 +8,12 @@ import Button from '../components/Button'
 import { theme } from '../theme/Theme'
 import { otpValidator } from '../helper/OTPValidator'
 import BackButton from '../components/BackButton'
-import OTPInputView from '@twotalltotems/react-native-otp-input'
 import { useSelector, useDispatch } from 'react-redux'
 import { verifyOtp } from '../repositories/apiRepo';
 import ShowDialog from '../components/Dailog'
 import Progress from '../components/ProgressBar'
+import { OtpInput } from "react-native-otp-entry";
+import { resetState } from '../redux/slice/otpVerificationSlice'
 
 export default function OTPVerificationScreen({ route, navigation }) {
     const [otp, setOtp] = useState({ value: '', error: '' })
@@ -24,26 +25,24 @@ export default function OTPVerificationScreen({ route, navigation }) {
     const otpInputRef = useRef(null);
 
     useEffect(() => {
-        otpInputRef.current.focusField(0);
+        // otpInputRef.current.focusField(0);
         if (data != null) {
-            console.log(data)
+            console.log(" ME called" + data)
             if (data.status == 200) {
+                dispatch(resetState());
                 navigation.dispatch(
                     CommonActions.navigate('UpdatePassword', {
                         email: email
                     })
-                )
+                );
             } else {
-                setVisible(true)
-            }
-        } else {
-            if (isError) {
                 setVisible(true)
             }
         }
     }, [data, isLoader, isError])
 
     const onVerfiyClicked = () => {
+        console.log("onVerfiyClicked called")
         const emailError = otpValidator(otp.value, 4)
         if (emailError) {
             setOtp({ ...otp, error: emailError })
@@ -58,7 +57,7 @@ export default function OTPVerificationScreen({ route, navigation }) {
     function onDialogPressed() {
         setClear(true)
         setVisible(false)
-        otpInputRef.current.focusField(0);
+        // otpInputRef.current.focusField(0);
     }
 
     return (
@@ -68,22 +67,22 @@ export default function OTPVerificationScreen({ route, navigation }) {
             <BackButton goBack={goBack} />
             <View style={styles.cardContainer}>
                 <Header>OTP verification</Header>
-                <OTPInputView
-                    ref={otpInputRef}
+                <OtpInput
+                    numberOfDigits={4}
                     style={{ width: '100%', height: 100 }}
-                    pinCount={4}
-                    code={otp.value}
-                    clearInputs={clear}
-                    onCodeChanged={(code) => {
-                        setOtp({ value: code, error: '' });
-                    }}
-                    onCodeFilled={(code) => {
+                    onTextChange={(text) => {
+                        console.log(text)
+                        setOtp({ value: text, error: '' });
+                    }
+                    }
+                    onFilled={(code) => {
                         setOtp({ value: code, error: '' });
                         console.log(`Code is ${code}, you are good to go!`)
                     }}
-                    autoFocusOnLoad={true}
-                    codeInputFieldStyle={styles.underlineStyleBase}
-                    selectionColor={"#03DAC6"}
+                    theme={{
+                        containerStyle: { width: '100%', height: 100, marginTop: 20 },
+                        pinCodeTextStyle: { color: "black" }
+                    }}
                 />
                 {otp.error ? <Text style={styles.error}>{otp.error}</Text> : null}
                 <Button mode="contained" onPress={onVerfiyClicked} >
@@ -94,6 +93,7 @@ export default function OTPVerificationScreen({ route, navigation }) {
     )
 
     function goBack() {
+        console.log("Going back")
         navigation.dispatch(CommonActions.goBack())
     }
 }

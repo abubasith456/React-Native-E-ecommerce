@@ -15,19 +15,20 @@ export const login = createAsyncThunk('login', async (payload) => {
     }
     const res = await axiosInstance.post("/login", param);
     const final = await res.data;
+    console.log("LOGG => " + final);
     return final;
 });
 
 
 // Create User
 export const register = createAsyncThunk('register', async (payload) => {
-    const { usernameValue, emailValue, passwordValue } = payload;
+    const { usernameValue, emailValue, passwordValue, dateOfBirth } = payload;
     console.log("register called => " + usernameValue)
     const param = {
         email: emailValue,
         username: usernameValue,
-        "dateOfBirth": "13042000",
-        "mobileNumber": "1234567890",
+        "dateOfBirth": dateOfBirth,
+        "mobileNumber": "",
         password: passwordValue,
         passwordConf: passwordValue
     }

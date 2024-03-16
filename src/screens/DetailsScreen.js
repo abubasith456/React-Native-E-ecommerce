@@ -53,57 +53,71 @@ const ProductDetails = ({ route, navigation }) => {
             </ScrollView>
             <View
                 style={styles.box_shadow}>
-                <View
+                {/* <View
                     style={{
                         flex: 1,
                         backgroundColor: '#fafafa',
                         height: '100%',
                         alignItems: 'center',
                         justifyContent: 'center',
+                    }}> */}
+                <TouchableOpacity
+                    style={{
+                        flex: 1,
+                        backgroundColor: '#fafafa',
+                        height: '100%',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                    }}
+                    onPress={() => {
+                        const data = [{ productId: id, name: name, image: img, quantity: "1" }
+                        ]
+                        addCartItem(data, (response) => {
+                            if (response.success) {
+                                Alert.alert("Done!", response.message);
+                            } else {
+                                Alert.alert("Alert!", response.message);
+                            }
+                        });
                     }}>
-                    <TouchableOpacity
-                        onPress={() => {
-                            const data = [{ productId: id, name: name, image: img, quantity: "1" }
-                            ]
-                            addCartItem(data, (response) => {
-                                if (response.success) {
-                                    Alert.alert("Done!", response.message);
-                                } else {
-                                    Alert.alert("Alert!", response.message);
-                                }
-                            });
-                        }}>
-                        <Text style={styles.big_button_text}>
-                            ADD TO BAG
-                        </Text>
-                    </TouchableOpacity>
-                </View>
-                <View
+                    <Text style={styles.add_to_bag_btn}>
+                        ADD TO BAG
+                    </Text>
+                </TouchableOpacity>
+                {/* </View> */}
+                {/* <View
                     style={{
                         flex: 1,
                         backgroundColor: '#DA1C4C',
                         height: '100%',
                         alignItems: 'center',
                         justifyContent: 'center',
+                    }}> */}
+                <TouchableOpacity
+                    style={{
+                        flex: 1,
+                        backgroundColor: theme.colors.primary,
+                        height: '100%',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                    }}
+                    onPress={() => {
+                        const data = [{
+                            productId: id, name: name, image: img, quantity: "1"
+                        }]
+                        addCartItem(data, (response) => {
+                            if (response.success) {
+                                navigation.navigate("Cart")
+                            } else {
+                                Alert.alert("Alert!", response.message);
+                            }
+                        });
                     }}>
-                    <TouchableOpacity
-                        onPress={() => {
-                            const data = [{
-                                productId: id, name: name, image: img, quantity: "1"
-                            }]
-                            addCartItem(data, (response) => {
-                                if (response.success) {
-                                    navigation.navigate("Cart")
-                                } else {
-                                    Alert.alert("Alert!", response.message);
-                                }
-                            });
-                        }}>
-                        <Text style={styles.big_button_text}>
-                            BUY NOW
-                        </Text>
-                    </TouchableOpacity>
-                </View>
+                    <Text style={styles.buy_now_btn}>
+                        BUY NOW
+                    </Text>
+                </TouchableOpacity>
+                {/* </View> */}
             </View>
         </View>
     );
@@ -146,11 +160,9 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         backgroundColor: '#fff',
     },
-    big_button_text: { fontSize: 18, lineHeight: 60, color: "black" },
-    checkout_btn_text: {
-        color: "#fff",
-        fontSize: 24,
-        lineHeight: 60,
+    add_to_bag_btn: { fontSize: 18, lineHeight: 60, color: "black" },
+    buy_now_btn: {
+        fontSize: 18, lineHeight: 60, color: "white" 
     },
 });
 export default ProductDetails;

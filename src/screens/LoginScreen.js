@@ -31,6 +31,7 @@ const LoginScreen = ({ navigation }) => {
     useEffect(() => {
         if (data != null) {
             if (data.status == 200) {
+                console.log("Login Done");
                 const userId = data.userData.user_id
                 loggedInUser(userId.toString());
                 const userData = {

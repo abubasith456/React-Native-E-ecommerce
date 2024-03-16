@@ -1,12 +1,17 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { verifyOtp } from '../../repositories/apiRepo';
 
+const initialState = {
+    data: null,
+    isLoader: false,
+    isError: false,
+}
+
 const otpVerify = createSlice({
     name: 'otpVerify',
-    initialState: {
-        data: null,
-        isLoader: false,
-        isError: false,
+    initialState: initialState,
+    reducers: {
+        resetState: (state) => initialState,
     },
     extraReducers: builder => {
         builder.addCase(verifyOtp.pending, (state, action) => {
@@ -23,7 +28,7 @@ const otpVerify = createSlice({
             } else {
                 state.isLoader = false;
                 state.isError = true;
-                state.data = action.payload;;
+                state.data = action.payload;
             }
         });
         builder.addCase(verifyOtp.rejected, (state, action) => {
@@ -36,4 +41,5 @@ const otpVerify = createSlice({
 
 });
 
+export const { resetState } = otpVerify.actions;
 export default otpVerify.reducer;

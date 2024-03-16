@@ -13,13 +13,12 @@ const HeaderIcon = () => {
             {/* location */}
             <View style={styles.locationContainer}>
                 <Text style={styles.locationType}>Home</Text>
-                <Text style={styles.address}>B 202 vraj vihar, vadodara</Text>
+                <Text style={styles.address}>Address ipothiku therila tambi!</Text>
             </View>
 
             {/* actions */}
             <View style={styles.actionBtns}>
                 <TouchableOpacity onPress={() => {
-                    console.log("CAN GO BACK? => " + navigation.canGoBack())
                     navigation.navigate(
                         "Cart"
                     )
@@ -27,12 +26,18 @@ const HeaderIcon = () => {
                     <FontAwesomeIcon icon={faCartShopping} size={20} />
                 </TouchableOpacity>
             </View>
-            <Image
-                source={{
-                    uri: "https://cdn.pixabay.com/photo/2013/07/13/10/44/man-157699_960_720.png",
-                }}
-                style={styles.userImage}
-            />
+            <TouchableOpacity onPress={() => {
+                navigation.navigate(
+                    "Profile"
+                )
+            }}>
+                <Image
+                    source={{
+                        uri: "https://cdn.pixabay.com/photo/2013/07/13/10/44/man-157699_960_720.png",
+                    }}
+                    style={styles.userImage}
+                />
+            </TouchableOpacity>
         </View>
     );
 };
@@ -56,6 +61,7 @@ const styles = StyleSheet.create({
     locationType: {
         fontSize: 16,
         fontWeight: "bold",
+        color: "#505050",
     },
     address: {
         fontSize: 12,

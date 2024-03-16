@@ -14,13 +14,14 @@ const SplashScreen = ({ navigation }) => {
 
     useEffect(() => {
 
-        getUserData(setUserData);
-        
+        // getUserData(setUserData);
+
         const fetchData = async () => {
             setTimeout(async () => {
-                console.log('User Data:', userData);
+
                 await getLoggedUser().then((value) => {
-                    console.log("SPLASH ==> " + userData?.user_id); // Use optional chaining to avoid null/undefined errors
+                    console.log('User Data:', value);
+                    // console.log("SPLASH ==> " + userData?.user_id); // Use optional chaining to avoid null/undefined errors
                     const screen = value !== "" && value !== null ? 'Home' : 'Login';
                     navigation.dispatch(StackActions.replace(screen));
                 });

@@ -7,17 +7,26 @@ import { useSelector, useDispatch } from 'react-redux'
 import { products } from '../repositories/apiRepo';
 import ShowDialog from '../components/Dailog'
 import Progress from '../components/ProgressBar'
-import { StyleSheet, FlatList, SafeAreaView } from "react-native";
+import { StyleSheet, FlatList, SafeAreaView, View } from "react-native";
 import ItemsCard from '../components/HeaderCard';
+import { Text } from 'react-native-paper';
 
 export default function ProductScreen({ route, navigation }) {
     const { data, isLoader, isError } = useSelector(state => state.products);
     const productData = data?.data || [];
     const [visible, setVisible] = useState(false);
     const dispatch = useDispatch();
+    const productName = route.params.productName;
+    const appBartitle = route.params.appBarName;
+
+    React.useLayoutEffect(() => {
+        navigation.setOptions({
+            title: appBartitle,
+        });
+    }, [navigation, appBartitle]);
 
     useEffect(() => {
-        const productName = route.params.productName;
+
         // console.log(" productName ===> " + productName);
         dispatch(products({ productName }))
         if (data != null) {
@@ -37,12 +46,17 @@ export default function ProductScreen({ route, navigation }) {
     return (
         <SafeAreaView style={styles.container}>
             {isLoader ? <Progress isLoading={isLoader} /> : null}
-            {productData.size != [] ? <FlatList
+            {productData.length == 0 && !isLoader ?
+                <View style={styles.noItemText}>
+                    <Text style={{ color: "black" }}> No item found!</Text>
+                </View> : null
+            }
+            {productData != [] ? <FlatList
                 keyExtractor={item => item._id}
                 data={data?.data == undefined ? data?.products : productData}
                 renderItem={({ item }) => (
                     <ItemsCard
-                        id={item._id}
+                        id={item.name + item.price + "_id"}
                         image={item.image == undefined && item.image == null ? item.productImage : item.image}
                         name={item.name == undefined ? item.productName : item.name}
                         price={item.price == undefined ? item.productPrice : item.price}
@@ -71,4 +85,10 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         color: theme.colors.primary,
     },
+    noItemText: {
+        height: "100%",
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+    }
 })

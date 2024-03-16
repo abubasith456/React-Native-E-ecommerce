@@ -31,11 +31,9 @@ function BannerScreen({ route, navigation }) {
     }
     return (
         <SafeAreaView style={styles.bodyContainer}>
-            <BackButtonWithText navigation={navigation} title={"hii"} />
             <FlatList
                 style={styles.bodyContainer}
                 data={item.products} keyExtractor={item => item.id} renderItem={renderItem} />
-
         </SafeAreaView>
     );
 }

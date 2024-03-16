@@ -224,6 +224,8 @@ const AddressScreen = ({ navigation }) => {
                         placeholderTextColor="grey"
                         selectionColor={theme.colors.primary}
                         mode="outlined"
+                        keyboardType='number-pad'
+                        textContentType="emailAddress"
                         outlineColor={theme.colors.primary}
                         value={address.phoneNumber}
                         onChangeText={(text) => validateField('phoneNumber', text, setPhoneNumValid)}

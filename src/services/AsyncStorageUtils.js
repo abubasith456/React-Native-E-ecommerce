@@ -83,3 +83,12 @@ export const setDefaultAddress = async (id) => {
     console.error('Error setting default address id:', error);
   }
 };
+
+export const clearAllAddresses = async () => {
+  try {
+    await AsyncStorage.removeItem(ADDRESS_STORAGE_KEY);
+    console.log('All addresses cleared successfully.');
+  } catch (error) {
+    console.error('Error clearing addresses:', error);
+  }
+};

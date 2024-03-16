@@ -15,6 +15,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { register } from '../repositories/apiRepo';
 import ShowDialog from '../components/Dailog'
 import Progress from '../components/ProgressBar'
+import DateTimePicker from '@react-native-community/datetimepicker';
 
 export default function RegisterScreen({ navigation }) {
     const [name, setName] = useState({ value: '', error: '' })
@@ -23,6 +24,8 @@ export default function RegisterScreen({ navigation }) {
     const { data, isLoader, isError } = useSelector(state => state.register);
     const [visible, setVisible] = useState(false);
     const dispatch = useDispatch();
+    const [date, setDate] = useState(null);
+    const [showDatePicker, setShowDatePicker] = useState(false);
 
     useEffect(() => {
         if (data != null) {
@@ -46,7 +49,7 @@ export default function RegisterScreen({ navigation }) {
         const nameError = nameValidator(name.value)
         const emailError = emailValidator(email.value)
         const passwordError = passwordValidator(password.value)
-        if (emailError || passwordError || nameError) {
+        if (emailError || passwordError || nameError || date == null) {
             setName({ ...name, error: nameError })
             setEmail({ ...email, error: emailError })
             setPassword({ ...password, error: passwordError })
@@ -56,14 +59,26 @@ export default function RegisterScreen({ navigation }) {
         const usernameValue = name.value
         const emailValue = email.value
         const passwordValue = password.value
+        const dateOfBirth = date.toISOString().split('T')[0]
         console.log(usernameValue)
-        dispatch(register({ usernameValue, emailValue, passwordValue }))
+        dispatch(register({ usernameValue, emailValue, passwordValue, dateOfBirth }))
 
     }
 
     function onDialogPressed() {
         setVisible(false)
     }
+
+    const handleDateChange = (event, selectedDate) => {
+        setShowDatePicker(Platform.OS === 'ios'); // Close the picker on iOS
+        if (selectedDate) {
+            setDate(selectedDate);
+        }
+    };
+
+    const handleShowDatePicker = () => {
+        setShowDatePicker(true);
+    };
 
     return (
         <AnimatedBackground>
@@ -101,6 +116,28 @@ export default function RegisterScreen({ navigation }) {
                     errorText={password.error}
                     secureTextEntry
                 />
+                <View style={{
+                    width: '100%',
+                    marginVertical: 12,
+                    flexDirection: 'row',
+                    justifyContent: 'space-between'
+                }}>
+                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                        <Text>Date of birth: </Text>
+                        <Text>{date ? date.toISOString().split('T')[0] : ''}</Text>
+                    </View>
+                    <Text style={{ color: theme.colors.primary }} onPress={handleShowDatePicker}>
+                        Select Date
+                    </Text>
+                    {showDatePicker && (
+                        <DateTimePicker
+                            value={date || new Date()}
+                            mode="date"
+                            display="default"
+                            onChange={handleDateChange}
+                        />
+                    )}
+                </View>
                 <Button
                     mode="contained"
                     onPress={onSignUpPressed}

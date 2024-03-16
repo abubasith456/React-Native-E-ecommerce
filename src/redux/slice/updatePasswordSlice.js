@@ -1,12 +1,17 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { updatePassword } from '../../repositories/apiRepo';
 
+const initialState = {
+    data: null,
+    isLoader: false,
+    isError: false,
+}
+
 const updatePasswordSlice = createSlice({
     name: 'updatePassword',
-    initialState: {
-        data: null,
-        isLoader: false,
-        isError: false,
+    initialState: initialState,
+    reducers: {
+        resetState: (state) => initialState,
     },
     extraReducers: builder => {
         builder.addCase(updatePassword.pending, (state, action) => {
@@ -27,5 +32,5 @@ const updatePasswordSlice = createSlice({
     },
 
 });
-
+export const { resetState } = updatePasswordSlice.actions;
 export default updatePasswordSlice.reducer;

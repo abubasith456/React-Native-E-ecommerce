@@ -9,10 +9,11 @@ import Progress from '../components/ProgressBar'
 import { useSelector, useDispatch } from 'react-redux'
 import { updatePassword } from '../repositories/apiRepo';
 import ShowDialog from '../components/Dailog'
-import { resetState } from '../redux/loginRedux/loginSlice'
-import { TextInput as PaperTextInput } from 'react-native-paper';
+import { resetState } from '../redux/slice/updatePasswordSlice'
+import BackButton from '../components/BackButton'
+import { CommonActions } from '@react-navigation/native'
 
-const UpdatePasswordScreen = ({ navigation }) => {
+const UpdatePasswordScreen = ({ route, navigation }) => {
     const [newPassword, setPassword] = useState({ value: '', error: '' })
     const [confirmPassword, setConfirmPassword] = useState({ value: '', error: '' })
     const [showPassword, setShowPassword] = useState(false);
@@ -25,12 +26,12 @@ const UpdatePasswordScreen = ({ navigation }) => {
     useEffect(() => {
         if (data != null) {
             if (data.status == 200) {
-                dispatch(resetState())
+                dispatch(resetState());
                 navigation.dispatch(
                     CommonActions.navigate({
                         name: 'Login',
                     })
-                )
+                );
             } else {
                 setVisible(true)
             }
@@ -43,7 +44,7 @@ const UpdatePasswordScreen = ({ navigation }) => {
 
     const onUpdatePressed = () => {
         const newPasswordError = passwordValidator(newPassword.value)
-        const confirmPasswordError = confirmPasswordValidator(confirmPassword.value)
+        const confirmPasswordError = confirmPasswordValidator(newPassword.value, confirmPassword.value)
         if (newPasswordError || confirmPasswordError) {
             setPassword({ ...newPassword, error: newPasswordError })
             setConfirmPassword({ ...confirmPassword, error: confirmPasswordError })
@@ -85,7 +86,7 @@ const UpdatePasswordScreen = ({ navigation }) => {
             <View style={styles.cardContainer}>
                 <Header>Update your password</Header>
                 <TextInput
-                    label="Mew Password"
+                    label="New Password"
                     returnKeyType="next"
                     value={newPassword.value}
                     onChangeText={(text) => setPassword({ value: text, error: '' })}
@@ -94,6 +95,7 @@ const UpdatePasswordScreen = ({ navigation }) => {
                     autoCapitalize="none"
                     autoCompleteType="password"
                     textContentType="password"
+                    secureTextEntry={true}
                 />
                 <TextInput
                     label="Confirm password"
@@ -102,14 +104,15 @@ const UpdatePasswordScreen = ({ navigation }) => {
                     onChangeText={(text) => setConfirmPassword({ value: text, error: '' })}
                     error={!!confirmPassword.error}
                     errorText={confirmPassword.error}
-                    secureTextEntry={showPassword}
-                    right={
-                        <PaperTextInput.Icon
-                            style={styles.passwordRightIcon}
-                            name={showPassword ? 'eye-off' : 'eye'}
-                            onPress={togglePasswordVisibility}
-                        />
-                    }
+                    secureTextEntry={true}
+                    autoCapitalize="none"
+                // right={
+                //     <PaperTextInput.Icon
+                //         style={styles.passwordRightIcon}
+                //         name={showPassword ? 'eye-off' : 'eye'}
+                //         onPress={togglePasswordVisibility}
+                //     />
+                // }
                 />
                 <Button mode="contained" onPress={onUpdatePressed}>
                     Update

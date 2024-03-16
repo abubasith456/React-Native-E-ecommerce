@@ -28,7 +28,9 @@ const registerSlice = createSlice({
         builder.addCase(register.rejected, (state, action) => {
             state.isLoader = false;
             state.isError = true;
-            state.data = null;
+            state.data = {
+                message: "Something went wrong!"
+            };
         });
     },
 

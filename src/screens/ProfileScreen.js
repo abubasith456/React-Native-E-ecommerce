@@ -30,7 +30,7 @@ const ProfileScreen = ({ navigation }) => {
             return [];
         }
 
-        const filteredKeys = Object.keys(userData).filter(key => key !== 'user_id');
+        const filteredKeys = Object.keys(userData).filter(key => key !== 'user_id' && key !== 'mobileNumber');
 
         return filteredKeys.map((key) => ({
             id: key,
@@ -92,6 +92,7 @@ const styles = StyleSheet.create({
         fontSize: 24,
         fontWeight: 'bold',
         marginBottom: 8,
+        color: "black"
     },
     menuItem: {
         flexDirection: 'row',

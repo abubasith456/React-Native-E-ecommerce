@@ -3,19 +3,19 @@ import { View, Text, FlatList, TouchableOpacity, Image, StyleSheet, Alert } from
 import { getLocalData, deleteItem, deleteAllCartItems } from '../repositories/localRepo';
 import { showConfirmationAlert } from '../components/dialoges/AlertDialogs';
 import { getLoggedUser } from '../services/StorageUtils';
-import { useSelector, useDispatch } from 'react-redux'
-import { placeOrder } from '../repositories/apiRepo';
+// import { useSelector, useDispatch } from 'react-redux'
+// import { placeOrder } from '../repositories/apiRepo';
 import LoaderModal from '../components/Loader';
-import { resetPlaceOrderState } from '../redux/slice/placeOrderSlice';
+// import { resetPlaceOrderState } from '../redux/slice/placeOrderSlice';
 import { theme } from '../theme/Theme';
 
 
 const CartScreen = ({ navigation }) => {
     const [cartItems, setCartItems] = useState([]);
     const [userId, setUserId] = useState("");
-    const dispatch = useDispatch();
+    // const dispatch = useDispatch();
     const [visible, setVisible] = useState(false);
-    const { data, isLoader, isError } = useSelector(state => state.placeOrder);
+    // const { data, isLoader, isError } = useSelector(state => state.placeOrder);
 
     useEffect(() => {
         // Load cart items when the component mounts
@@ -24,28 +24,28 @@ const CartScreen = ({ navigation }) => {
             setUserId(user);
         });
 
-        if (data != null) {
-            console.log(" DATA not NUlol ==> " + JSON.stringify(data));
-            if (data.success) {
-                dispatch(resetPlaceOrderState());
-                deleteAllCartItems();
-                setCartItems([]);
-                showConfirmationAlert(
-                    'Success!',
-                    'Order placed succesfully.',
-                    "OK",
-                    "",
-                    () => {
-                        loadCartItems();
-                    },
-                    () => { }
-                );
-            } else if (isError) {
+        // if (data != null) {
+        //     console.log(" DATA not NUlol ==> " + JSON.stringify(data));
+        //     if (data.success) {
+        //         dispatch(resetPlaceOrderState());
+        //         deleteAllCartItems();
+        //         setCartItems([]);
+        //         showConfirmationAlert(
+        //             'Success!',
+        //             'Order placed succesfully.',
+        //             "OK",
+        //             "",
+        //             () => {
+        //                 loadCartItems();
+        //             },
+        //             () => { }
+        //         );
+        //     } else if (isError) {
 
-            }
-        }
+        //     }
+        // }
 
-    }, [data, isLoader, isError]);
+    }, []);
 
     const loadCartItems = () => {
         // Retrieve cart items from the database
@@ -110,7 +110,7 @@ const CartScreen = ({ navigation }) => {
 
     return (
         <View style={styles.container}>
-            <LoaderModal isVisible={isLoader} />
+            <LoaderModal isVisible={false} />
             {cartItems.length == 0 ?
                 <View style={styles.noItemText}>
                     <Text style={{ color: "black" }}> No items added yet!</Text>

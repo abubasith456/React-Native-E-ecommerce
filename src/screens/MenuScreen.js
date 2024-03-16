@@ -5,6 +5,7 @@ import { loggedInUser } from '../services/StorageUtils';
 import { ConfirmDialog } from '../components/Dailog';
 import { useState } from 'react';
 import { faHome, faList, faListCheck, faHomeAlt, faHomeUser } from '@fortawesome/free-solid-svg-icons';
+import { clearAllAddresses } from '../services/AsyncStorageUtils';
 
 
 export const MenuScreen = ({ navigation }) => {
@@ -30,9 +31,10 @@ export const MenuScreen = ({ navigation }) => {
         />
     }
 
-    const positiveOnPress = () => {
+    const positiveOnPress = async () => {
         loggedInUser("")
-        navigation.navigate('Login')
+        await clearAllAddresses();
+        navigation.replace('Login')
         setIsDialogShow(false)
     }
 

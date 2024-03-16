@@ -48,7 +48,7 @@ export default function RootStack() {
                 headerShown: false,
             }} />
             <Stack.Screen name="Banner" component={BannerScreen} options={{
-                headerShown: false
+                headerShown: true
             }} />
             <Stack.Screen name="OTP" component={OTP} options={{
                 headerShown: false,
