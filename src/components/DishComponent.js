@@ -7,7 +7,7 @@ import { useNavigation } from '@react-navigation/native';
 
 
 
-const DishComponent = (props) => {
+const CategoryComponent = (props) => {
     const { image, name, link } = props;
     const navigation = useNavigation();
     const productName = link;
@@ -33,7 +33,7 @@ const DishComponent = (props) => {
     );
 };
 
-export default DishComponent;
+export default CategoryComponent;
 
 const styles = StyleSheet.create({
     container: {

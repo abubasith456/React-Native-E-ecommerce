@@ -24,7 +24,7 @@ const LocationComponent = ({ onLocationChange }) => {
 
     const getAddressFromLocation = async (latitude, longitude) => {
         try {
-            const response = await Geocoding.from({
+            const response = await Geocoder.from({
                 latitude,
                 longitude,
             });

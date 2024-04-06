@@ -154,3 +154,23 @@ export const placeOrder = createAsyncThunk('placeOrder', async (payload) => {
     console.log("ORDER =>" + JSON.stringify(response))
     return response;
 });
+
+export const updateProfile = createAsyncThunk('updateProfile', async (payload) => {
+    const filename = payload.image.split('/').pop();
+    const formData = new FormData();
+    formData.append('file', { uri: payload.image, name: filename, type: 'image/jpeg' }); // Assuming JPEG image
+    formData.append('userId', payload.userId);
+    console.log("updateProfile =>", JSON.stringify(formData));
+    try {
+        const res = await axiosInstance.post('/profileUpdate', formData, { // Adjust headers for multipart/form-data if using formData
+            headers: {
+                'Content-Type': 'multipart/form-data' // Optional if using formData
+            }
+        });
+        console.log("Response =>", res.data);
+        return res.data;
+    } catch (error) {
+        console.error("Error updating profile:", error);
+        throw error; // Rethrow error for the UI to handle
+    }
+});

@@ -7,7 +7,7 @@ import updatePasswordSlice from '../slice/updatePasswordSlice';
 import bannerSlice from '../slice/bannerSlice';
 import home from '../slice/home';
 import products from '../slice/products';
-import profileSlice from '../slice/profileSlice'
+import { profileUpdateReducer, profileReducer } from '../slice/profileSlice'
 import ordersSlice from '../slice/ordersSlice';
 import placeOrderSlice from '../slice/placeOrderSlice'
 
@@ -23,8 +23,9 @@ export const store = configureStore({
     banner: bannerSlice,
     home: home,
     products: products,
-    profile: profileSlice,
+    profile: profileReducer,
     orders: ordersSlice,
     placeOrder: placeOrderSlice,
+    updateProfile: profileUpdateReducer
   },
 });

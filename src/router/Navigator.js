@@ -17,6 +17,7 @@ import OrdersScreen from "../screens/OrdersListscrean";
 import CartScreen from "../screens/CartScreen";
 import AddressScreen from "../screens/AddressScreen";
 import OrderSummaryScreen from "../screens/OrderSummeryScreen";
+import PermissionScreen from "../screens/PermissionScreen";
 
 
 
@@ -75,6 +76,9 @@ export default function RootStack() {
 
             }} />
             <Stack.Screen name="OrderSummery" component={OrderSummaryScreen} options={{
+
+            }} />
+            <Stack.Screen name="Permission" component={PermissionScreen} options={{
 
             }} />
             {/* <Stack.Screen name="Welcome" component={WelcomeScreen} options={{

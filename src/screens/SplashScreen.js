@@ -12,19 +12,23 @@ const SplashScreen = ({ navigation }) => {
 
     const [userData, setUserData] = useState([]);
 
+    const loadUser = () => {
+        // Retrieve cart items from the database
+        getUserData(setUserData);
+    };
+
     useEffect(() => {
-
-        // getUserData(setUserData);
-
         const fetchData = async () => {
+            loadUser();
             setTimeout(async () => {
-
-                await getLoggedUser().then((value) => {
-                    console.log('User Data:', value);
-                    // console.log("SPLASH ==> " + userData?.user_id); // Use optional chaining to avoid null/undefined errors
-                    const screen = value !== "" && value !== null ? 'Home' : 'Login';
-                    navigation.dispatch(StackActions.replace(screen));
-                });
+                const test = userData != [] ? 'Home' : 'Login';
+                navigation.dispatch(StackActions.replace(test));
+                // await getUserData.then((value) => {
+                //     console.log('User Data:', value);
+                //     console.log("SPLASH ==> " + value); // Use optional chaining to avoid null/undefined errors
+                //     const screen = value != [] && value != null ? 'Permission' : 'Login';
+                //     navigation.dispatch(StackActions.replace(screen));
+                // });
             }, 4000);
         };
 
