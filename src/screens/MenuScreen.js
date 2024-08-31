@@ -1,6 +1,6 @@
-import { FlatList, View } from 'react-native'
+import { FlatList, StyleSheet, View } from 'react-native'
 import { menuData } from '../constant/AppConstant';
-import ChatTileCard from '../components/MenuCard';
+import MenuCard from '../components/MenuCard';
 import { ConfirmDialog } from '../components/Dailog';
 import { useState } from 'react';
 import { clearAllAddresses } from '../services/AsyncStorageUtils';
@@ -23,7 +23,7 @@ export const MenuScreen = ({ navigation }) => {
                 setIsDialogShow(true)
             }
         }
-        return <ChatTileCard
+        return <MenuCard
             icon={item.icon}
             data={item.text}
             onPress={pressHandler}
@@ -52,6 +52,7 @@ export const MenuScreen = ({ navigation }) => {
                 negativeOnPress={negativeOnPress}
             /> : null}
             <FlatList
+                style={styles.menuContainer}
                 data={menuData}
                 keyExtractor={(item) => item.id}
                 renderItem={renderItem}
@@ -60,3 +61,11 @@ export const MenuScreen = ({ navigation }) => {
 
     );
 };
+
+const styles = StyleSheet.create({
+    menuContainer: {
+        flexDirection: 'row',
+        padding: 10,
+        backgroundColor: '#f8f8f8',
+    },
+});

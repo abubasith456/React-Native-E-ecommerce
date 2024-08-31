@@ -6,8 +6,8 @@ import { Button, StyleSheet, FlatList } from 'react-native'
 import { useNavigation } from '@react-navigation/native';
 import { theme } from '../theme/Theme';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-import { faHome, faList, faListCheck, faHomeAlt, faHomeUser } from '@fortawesome/free-solid-svg-icons';
-import { MenuScreen } from '../screens/MenuScreen';
+import { faHome, faList, faListCheck, faHomeAlt, faToolbox, faTools } from '@fortawesome/free-solid-svg-icons';
+import { MenuScreen as SettingsScreen } from '../screens/MenuScreen';
 
 
 const Tab = createBottomTabNavigator();
@@ -18,10 +18,10 @@ const HomeScreen = () => {
         <Tab.Navigator screenOptions={({ route }) => ({
             tabBarIcon: ({ focused, color, size }) => {
                 let iconName;
-                if (route.name === 'HomeTab') {
+                if (route.name === 'Home') {
                     iconName = focused ? faHome : faHomeAlt;
-                } else if (route.name === 'MenuTab') {
-                    iconName = focused ? faList : faListCheck;
+                } else if (route.name === 'Settings') {
+                    iconName = focused ? faToolbox : faTools;
                 }
 
                 // You can return any component that you like here!
@@ -31,11 +31,11 @@ const HomeScreen = () => {
             tabBarInactiveTintColor: 'gray',
         })}
         >
-            <Tab.Screen key="1" name="HomeTab" component={Home} options={{
+            <Tab.Screen key="1" name="Home" component={Home} options={{
                 headerShown: false,
             }} />
 
-            <Tab.Screen key="2" name="MenuTab" component={MenuScreen} options={{
+            <Tab.Screen key="2" name="Settings" component={SettingsScreen} options={{
                 headerStyle: {
                     backgroundColor: '#3498db', // Set the background color of the app bar
                 },
