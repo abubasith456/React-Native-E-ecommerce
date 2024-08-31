@@ -44,21 +44,30 @@ export const login = createAsyncThunk('login', async (payload) => {
 
 // Create User
 export const register = createAsyncThunk('register', async (payload) => {
-    const { usernameValue, emailValue, passwordValue, dateOfBirth } = payload;
-    console.log("register called => " + usernameValue)
+    const { usernameValue, emailValue, mobileValue, passwordValue, dateOfBirth } = payload;
+
+    const isEmailRegistration = Boolean(emailValue);
+    const url = isEmailRegistration ? "/register/email" : "/register/mobile";
+
+    // Build request parameters based on the type of registration
     const param = {
-        email: emailValue,
         username: usernameValue,
-        "dateOfBirth": dateOfBirth,
-        "mobileNumber": "",
         password: passwordValue,
-        passwordConf: passwordValue
+        passwordConf: passwordValue,
+        dateOfBirth
+    };
+
+    if (isEmailRegistration) {
+        param.email = emailValue;
+    } else {
+        param.mobileNumber = mobileValue;
     }
-
-    const res = await axiosInstance.post("/register", param);
+    console.log("Register URL =>", url);
+    console.log("Register called with params =>", param);
+    const res = await axiosInstance.post(url, param);
     const response = await res.data;
+    console.log("Register => ", response);
     return response;
-
 });
 
 // Forgot password
