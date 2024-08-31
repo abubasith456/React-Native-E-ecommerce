@@ -3,11 +3,8 @@ import { FlatList, View, StyleSheet, Dimensions, Text, Pressable } from 'react-n
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { CommonActions } from '@react-navigation/native';
 import ItemsCard from '../components/HeaderCard';
-import OrderAgainComponent from '../components/OrderAgainComponent';
-import { restaurantData } from '../constant/dish';
 import HeaderIcon from '../components/HeaderIcons';
-import CategoriesContainer from '../components/DishComponentContainer';
-import FeaturedRestaurantsContainer from '../components/product/productsContainer';
+import CategoriesContainer from '../components/CategoryComponentContainer';
 import Banner from '../components/Banner';
 import { generateColor } from '../utils/Colors';
 import { useEffect, useState } from 'react';
@@ -16,7 +13,7 @@ import { home } from '../repositories/apiRepo';
 const { width } = Dimensions.get('window');
 import { getLoggedUser } from '../services/StorageUtils'
 import ShowDialog from '../components/Dailog';
-import LoaderModal from '../components/Loader';
+import ImageLoader from '../components/ImageLoader';
 
 function HomeScreen({ navigation }) {
 
@@ -26,6 +23,7 @@ function HomeScreen({ navigation }) {
     // Check if data and data.data.banner exist before rendering FlatList
     const bannerData = data?.data?.banner || [];
     const categoryData = data?.data?.categories || [];
+    const productsData = data?.data?.products || [];
 
     useEffect(() => {
         getLoggedUser().then((userId) => {
@@ -57,23 +55,17 @@ function HomeScreen({ navigation }) {
         <SafeAreaView style={styles.container}>
             {visible ? <ShowDialog message={data.message} onPress={onDialogPressed} /> : null}
             {/* Home */}
-            {isLoader ? <LoaderModal isVisible={true} /> : <FlatList
+            {isLoader ? <ImageLoader /> : <FlatList
                 keyExtractor={item => item.id}
-                data={restaurantData}
-                // renderItem={({ item }) => (
-                //     <ItemsCard
-                //         image={item.image}
-                //         restaurant={item.restaurant}
-                //         duration={item.duration}
-                //         distance={item.distance}
-                //         bill={item.bill}
-                //         rating={item.rating}
-                //         discount={item.discount}
-                //         isVeg={item.isVeg}
-                //         totalOrder={item.totalOrder}
-                //         cuisines={item.cuisines}
-                //     />
-                // )}
+                data={productsData}
+                renderItem={({ item }) => (
+                    <ItemsCard
+                        productsData={productsData}
+                        image={item.productImage}
+                        name={item.name}
+                        price={item.price}
+                    />
+                )}
                 showsVerticalScrollIndicator={false}
                 ListHeaderComponent={
                     <>
@@ -108,6 +100,7 @@ function HomeScreen({ navigation }) {
                         {/* <OrderAgainComponent /> */}
                         {/* Categories */}
                         <CategoriesContainer categories={categoryData} />
+                        <Text style={styles.productHeading} >Our products</Text>
                         {/* Featured restaurants */}
                         {/* <FeaturedRestaurantsContainer />
                         <Text style={styles.restaurantCardHeading}>
@@ -125,8 +118,8 @@ export default HomeScreen;
 const styles = StyleSheet.create({
     container: {
         height: "100%",
-        backgroundColor: "#fff",
-        flex: 2,
+        backgroundColor: "white",
+        flex: 1,
         // marginTop: Platform.OS === "android" ? 50 : 0,
     },
     categories: {
@@ -150,6 +143,16 @@ const styles = StyleSheet.create({
     bannerLoading: {
         width: width,
         height: 100
-    }
+    },
+    productHeading: {
+        width: "93%",
+        marginLeft: "20",
+        fontSize: 18,
+        fontWeight: "bold",
+        color: "black",
+        alignSelf: "center",
+        paddingTop: 10,
+        paddingBottom: 10,
+    },
 
 });

@@ -1,10 +1,17 @@
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { v4 as uuidv4 } from 'uuid';
 
 
 const CART_KEY = 'CART_KEY';
 const USER_DATA_KEY = 'USER_DATA_KEY';
+
+function generateUUID() {
+    return 'xxxabuxx-xxxx-4xxx-yxxx-xxxxxbasithx'.replace(/[xy]/g, function(c) {
+      const r = Math.random() * 16 | 0;
+      const v = c === 'x' ? r : (r & 0x3 | 0x8);
+      return v.toString(16);
+    });
+  }
 
 // Function to initialize AsyncStorage
 export const initializeAsyncStorage = () => {
@@ -24,7 +31,7 @@ export const addCartItem = async (data, callback) => {
         const existingCart = JSON.parse(await AsyncStorage.getItem(CART_KEY)) || [];
 
         // Add unique IDs to new items
-        const itemsWithIds = data.map(item => ({ ...item, id: uuidv4() }));
+        const itemsWithIds = data.map(item => ({ ...item, id: generateUUID() }));
 
         // Add new items
         existingCart.push(...itemsWithIds);
@@ -107,6 +114,7 @@ export const getUserData = async (setUserData) => {
             setUserData(userData);
             console.log('User data retrieved successfully from AsyncStorage');
         } else {
+            setUserData([]);
             console.log('No user data found in AsyncStorage');
         }
     } catch (error) {

@@ -1,49 +1,41 @@
-import { View, Image, StyleSheet, PermissionsAndroid, Permissions } from "react-native";
+import { View, Image, StyleSheet } from "react-native";
 import { StackActions } from '@react-navigation/native';
-import { getLoggedUser } from "../services/StorageUtils";
-import { useEffect, useState } from "react";
-import { getLocation } from "../utils/LocationUtility";
-import { getAddressFromLocation } from "../utils/GeocodingUtility";
-import { initializeAsyncStorage, getUserData } from "../repositories/localRepo";
+import { useEffect } from "react";
+import { getUserData } from "../repositories/localRepo";
 
 
 
 const SplashScreen = ({ navigation }) => {
 
-    const [userData, setUserData] = useState([]);
-
-    const loadUser = () => {
-        // Retrieve cart items from the database
-        getUserData(setUserData);
-    };
-
     useEffect(() => {
         const fetchData = async () => {
-            loadUser();
-            setTimeout(async () => {
-                const test = userData != [] ? 'Home' : 'Login';
-                navigation.dispatch(StackActions.replace(test));
-                // await getUserData.then((value) => {
-                //     console.log('User Data:', value);
-                //     console.log("SPLASH ==> " + value); // Use optional chaining to avoid null/undefined errors
-                //     const screen = value != [] && value != null ? 'Permission' : 'Login';
-                //     navigation.dispatch(StackActions.replace(screen));
-                // });
-            }, 4000);
+            try {
+                // Call getUserData and handle the result
+                console.log("User DATA? =>");
+                getUserData((userData) => {
+                    console.log("User DATA? =>", userData);
+                    setTimeout(async () => {
+                        if (userData && Object.keys(userData).length > 0) {
+                            // User data exists, navigate to home screen
+                            navigation.dispatch(StackActions.replace("Home"));
+                        } else {
+                            // No user data, navigate to login screen
+                            navigation.dispatch(StackActions.replace("Login"));
+                        }
+                    }, 4000);
+                });
+            } catch (error) {
+                console.error('Error checking user data:', error);
+                // Handle error (e.g., navigate to a fallback screen or show an error message)
+                navigation.dispatch(StackActions.replace("Login"));
+            } finally {
+                // Ensure loading state is updated
+                setLoading(false);
+            }
         };
 
         fetchData();
-    }, [])
-
-    // setTimeout(async function () {
-    //     await getLoggedUser().then((value) => {
-    //         console.log("SPLASH ==> " + userData.user_id);
-    //         const screen = value != "" && value != null ? 'Home' : 'Login'
-    //         navigation.dispatch(
-    //             StackActions.replace(screen)
-    //         );
-    //     })
-    // }, 4000);
+    }, [navigation]);
 
     return (
         <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>

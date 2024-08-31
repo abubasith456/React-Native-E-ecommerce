@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react'
 import { Animated, TouchableOpacity, StyleSheet, View, Easing, ImageBackground } from 'react-native'
-import { Text } from 'react-native-paper'
+import { Icon, Text } from 'react-native-paper'
 import Background from '../components/Background'
 import Header from '../components/Header'
 import Button from '../components/Button'
@@ -17,6 +17,16 @@ import { resetState } from '../redux/loginRedux/loginSlice'
 import { loggedInUser } from '../services/StorageUtils'
 import { TextInput as PaperTextInput, IconButton } from 'react-native-paper';
 import { insertUserData } from '../repositories/localRepo'
+import {
+    statusCodes,
+    isErrorWithCode,
+    GoogleSignin,
+    GoogleSigninButton,
+} from '@react-native-google-signin/google-signin';
+import { GOOGLE_CLIENT_ID } from '../constant/AppConstant'
+import UserDataHelper from '../helper/UserDataHelper'
+import GoogleSignInData from '../models/GoogleUserModel'
+
 
 const LoginScreen = ({ navigation }) => {
     const [email, setEmail] = useState({ value: '', error: '' })
@@ -27,8 +37,22 @@ const LoginScreen = ({ navigation }) => {
     const { data, isLoader, isError } = useSelector(state => state.login);
     const initialValue = 0;
     const translateValue = useRef(new Animated.Value(initialValue)).current;
+    const userDataHelper = UserDataHelper.getInstance();
 
     useEffect(() => {
+
+        GoogleSignin.configure({
+            webClientId: GOOGLE_CLIENT_ID, // client ID of type WEB for your server. Required to get the `idToken` on the user object, and for offline access.
+            offlineAccess: true, // if you want to access Google API on behalf of the user FROM YOUR SERVER
+            //hostedDomain: '', // specifies a hosted domain restriction
+            forceCodeForRefreshToken: true, // [Android] related to `serverAuthCode`, read the docs link below *.
+            //accountName: '', // [Android] specifies an account name on the device that should be used
+            //iosClientId: '<FROM DEVELOPER CONSOLE>', // [iOS] if you want to specify the client ID of type iOS (otherwise, it is taken from GoogleService-Info.plist)
+            //googleServicePlistPath: '', // [iOS] if you renamed your GoogleService-Info file, new name here, e.g. GoogleService-Info-Staging
+            //openIdRealm: '', // [iOS] The OpenID2 realm of the home web server. This allows Google to include the user's OpenID Identifier in the OpenID Connect ID token.
+            profileImageSize: 120, // [iOS] The desired height (and width) of the profile image. Defaults to 120px
+          });
+
         if (data != null) {
             if (data.status == 200) {
                 console.log("Login Done");
@@ -84,6 +108,44 @@ const LoginScreen = ({ navigation }) => {
         setPassword({ value: '', error: '' });
     }
 
+    async function signIn() {
+        try {
+            await GoogleSignin.signOut();
+            console.log('User signed out successfully');
+            await GoogleSignin.hasPlayServices();
+            const userInfo = await GoogleSignin.signIn();
+            console.log(userInfo);
+            const googleSignInData = GoogleSignInData.fromJson(userInfo);// Model class convertion
+            userDataHelper.setGoogleSignInData(googleSignInData) // Set that data into instance
+            const googleToken = googleSignInData.idToken;
+            dispatch(login({ googleToken }))
+        } catch (error) {
+            console.log("Error :: " + error);
+            if (isErrorWithCode(error)) {
+                switch (error.code) {
+                    case statusCodes.NO_SAVED_CREDENTIAL_FOUND:
+                        // Android and Apple only. No saved credential found, try calling `createAccount`
+                        break;
+                    case statusCodes.SIGN_IN_CANCELLED:
+                        // sign in was cancelled
+                        break;
+                    case statusCodes.ONE_TAP_START_FAILED:
+                        // Android-only, you probably have hit rate limiting.
+                        // On Android, you can still call `presentExplicitSignIn` in this case.
+                        break;
+                    case statusCodes.PLAY_SERVICES_NOT_AVAILABLE:
+                        // Android-only: play services not available or outdated
+                        // Web: when calling an unimplemented api (requestAuthorization)
+                        break;
+                    default:
+                    // something else happened
+                }
+            } else {
+                // an error that's not related to google sign in occurred
+            }
+        }
+    };
+
     return (
         <Background>
             {isLoader ? <Progress isLoading={isLoader} /> : null}
@@ -110,13 +172,13 @@ const LoginScreen = ({ navigation }) => {
                     error={!!password.error}
                     errorText={password.error}
                     secureTextEntry={true}
-                    // right={
-                    //     <PaperTextInput.Icon
-                    //         style={styles.passwordRightIcon}
-                    //         name={showPassword ? 'eye-off' : 'eye'}
-                    //         onPress={togglePasswordVisibility}
-                    //     />
-                    // }
+                // right={
+                //     <PaperTextInput.Icon
+                //         style={styles.passwordRightIcon}
+                //         name={showPassword ? 'eye-off' : 'eye'}
+                //         onPress={togglePasswordVisibility}
+                //     />
+                // }
                 />
                 <View style={styles.forgotPassword}>
                     <TouchableOpacity
@@ -143,6 +205,7 @@ const LoginScreen = ({ navigation }) => {
                         navigation.dispatch(
                             CommonActions.navigate({
                                 name: 'SignUp',
+                                params: { registrationType: "number" }
                             })
                         )
                     }
@@ -150,8 +213,16 @@ const LoginScreen = ({ navigation }) => {
                         <Text style={styles.link}>Sign up</Text>
                     </TouchableOpacity>
                 </View>
+                <View style={styles.socialContainer}>
+                    <TouchableOpacity style={styles.socialButton} onPress={() => console.log('Google Login')}>
+
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.socialButton} onPress={() => signIn()}>
+
+                    </TouchableOpacity>
+                </View>
             </View>
-        </Background>
+        </Background >
 
     )
 }
@@ -204,5 +275,20 @@ const styles = StyleSheet.create({
     },
     passwordRightIcon: {
         color: 'black',
-    }
+    },
+    socialContainer: {
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+        width: '100%',
+        marginTop: 20,
+    },
+    socialButton: {
+        backgroundColor: theme.colors.primary,
+        borderRadius: 50,
+        padding: 10,
+        width: 60,
+        height: 60,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
 })

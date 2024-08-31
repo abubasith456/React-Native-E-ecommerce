@@ -1,6 +1,6 @@
 import { Dimensions, StyleSheet, Text, View } from "react-native";
 import React from "react";
-import CategoryComponent from "./DishComponent";
+import CategoryComponent from "./CategoryComponent";
 import { dishes } from "../constant/dish";
 
 
@@ -11,17 +11,12 @@ const CategoriesContainer = (categories) => {
     console.log(categoryData)
 
     const screenWidth = Dimensions.get('window').width;
-    const itemWidth = (screenWidth - 20) / 3; // Subtracting 20 for margins and dividing by 3 for 3 items per row
+    const itemWidth = (screenWidth - 20) / 2; // Subtracting 20 for margins and dividing by 3 for 3 items per row
 
     // Calculate the number of placeholder items needed to fill the last row
-    const numItemsInLastRow = categoryData.length % 3;
-    const numPlaceholders = numItemsInLastRow === 0 ? 0 : 3 - numItemsInLastRow;
-
+    const numItemsInLastRow = categoryData.length % 2;
     // Create an array of items, including placeholder items if needed
     const items = [...categoryData];
-    for (let i = 0; i < numPlaceholders; i++) {
-        items.push({ empty: true, _id: `placeholder_${i}` });
-    }
 
     return (
         <View style={styles.container}>
@@ -33,7 +28,7 @@ const CategoriesContainer = (categories) => {
                         image={item.image}
                         name={item.name}
                         link={item.link}
-                        key={item._id}
+                        key={item.name + item.link}
                     />
                 ))}
             </View>
@@ -48,6 +43,7 @@ const styles = StyleSheet.create({
         width: "93%",
         alignSelf: "center",
         paddingTop: 10,
+        paddingBottom: 10,
     },
     heading: {
         fontSize: 18,

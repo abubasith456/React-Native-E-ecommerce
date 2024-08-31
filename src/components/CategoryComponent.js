@@ -23,7 +23,7 @@ const CategoryComponent = (props) => {
                     style={styles.image}
                     source={{
                         uri: image,
-                        priority: FastImage.priority.high,
+                        priority: FastImage.priority.high
                     }}
                     resizeMode={FastImage.resizeMode.contain}
                 />

@@ -10,7 +10,7 @@ import { theme } from '../theme/Theme'
 import { emailValidator } from '../helper/EmailValidator'
 import { passwordValidator } from '../helper/PasswordValidator'
 import { nameValidator } from '../helper/NameValidator'
-import { CommonActions } from '@react-navigation/native';
+import { CommonActions, useRoute } from '@react-navigation/native';
 import { useSelector, useDispatch } from 'react-redux'
 import { register } from '../repositories/apiRepo';
 import ShowDialog from '../components/Dailog'
@@ -18,9 +18,12 @@ import Progress from '../components/ProgressBar'
 import DateTimePicker from '@react-native-community/datetimepicker';
 
 export default function RegisterScreen({ navigation }) {
+    const route = useRoute();
+    const registrationType = route.params?.registrationType || 'email';
     const [name, setName] = useState({ value: '', error: '' })
     const [email, setEmail] = useState({ value: '', error: '' })
     const [password, setPassword] = useState({ value: '', error: '' })
+    const [mobileNumber, setMobileNumber] = useState({ value: '', error: '' }); // New mobile number state
     const { data, isLoader, isError } = useSelector(state => state.register);
     const [visible, setVisible] = useState(false);
     const dispatch = useDispatch();
@@ -47,18 +50,28 @@ export default function RegisterScreen({ navigation }) {
 
     const onSignUpPressed = async () => {
         const nameError = nameValidator(name.value)
-        const emailError = emailValidator(email.value)
         const passwordError = passwordValidator(password.value)
-        if (emailError || passwordError || nameError || date == null) {
-            setName({ ...name, error: nameError })
-            setEmail({ ...email, error: emailError })
-            setPassword({ ...password, error: passwordError })
-            return
+        let emailError = '';
+        let mobileNumberError = '';
+
+        if (registrationType === 'email') {
+            emailError = emailValidator(email.value);
+        } else {
+            mobileNumberError = mobileNumber.value ? null : 'Mobile number is required';
+        }
+
+        if (emailError || passwordError || nameError || (registrationType === 'email' && !email.value) || (registrationType === 'mobile' && !mobileNumber.value) || date == null) {
+            setName({ ...name, error: nameError });
+            setEmail({ ...email, error: emailError });
+            setMobileNumber({ ...mobileNumber, error: mobileNumberError });
+            setPassword({ ...password, error: passwordError });
+            return;
         }
 
         const usernameValue = name.value
         const emailValue = email.value
         const passwordValue = password.value
+        const mobileValue = mobileNumber.value;
         const dateOfBirth = date.toISOString().split('T')[0]
         console.log(usernameValue)
         dispatch(register({ usernameValue, emailValue, passwordValue, dateOfBirth }))
@@ -95,18 +108,30 @@ export default function RegisterScreen({ navigation }) {
                     error={!!name.error}
                     errorText={name.error}
                 />
-                <TextInput
-                    label="Email"
-                    returnKeyType="next"
-                    value={email.value}
-                    onChangeText={(text) => setEmail({ value: text, error: '' })}
-                    error={!!email.error}
-                    errorText={email.error}
-                    autoCapitalize="none"
-                    autoCompleteType="email"
-                    textContentType="emailAddress"
-                    keyboardType="email-address"
-                />
+                {registrationType === 'email' ? (
+                    <TextInput
+                        label="Email"
+                        returnKeyType="next"
+                        value={email.value}
+                        onChangeText={(text) => setEmail({ value: text, error: '' })}
+                        error={!!email.error}
+                        errorText={email.error}
+                        autoCapitalize="none"
+                        autoCompleteType="email"
+                        textContentType="emailAddress"
+                        keyboardType="email-address"
+                    />
+                ) : (
+                    <TextInput
+                        label="Mobile Number"
+                        returnKeyType="next"
+                        value={mobileNumber.value}
+                        onChangeText={(text) => setMobileNumber({ value: text, error: '' })}
+                        error={!!mobileNumber.error}
+                        errorText={mobileNumber.error}
+                        keyboardType="phone-pad"
+                    />
+                )}
                 <TextInput
                     label="Password"
                     returnKeyType="done"

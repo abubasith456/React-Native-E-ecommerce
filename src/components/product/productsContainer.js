@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
     container: {
         width: "93%",
         alignSelf: "center",
-        marginTop: 20,
+
     },
     heading: {
         fontSize: 18,

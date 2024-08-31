@@ -8,15 +8,37 @@ const axiosInstance = axios.create({ baseURL: base_url })
 
 // Login
 export const login = createAsyncThunk('login', async (payload) => {
-    const { emailValue, passwordValue } = payload; // Destructure parameters
-    const param = {
-        email: emailValue,
-        password: passwordValue
+    const { emailValue, passwordValue, googleToken } = payload; // Destructure parameters
+
+    // Prepare parameters based on provided login method
+    let param = {};
+
+    if (googleToken) {
+        // If Google token is provided, only send the Google token
+        param = { googleToken: googleToken };
+    } else if (emailValue && passwordValue) {
+        // If email and password are provided, send them
+        param = {
+            email: emailValue,
+            password: passwordValue
+        };
+    } else {
+        // If neither email/password nor Google token is provided, throw an error
+        throw new Error('Either email/password or Google token must be provided.');
     }
-    const res = await axiosInstance.post("/login", param);
-    const final = await res.data;
-    console.log("LOGG => " + final);
-    return final;
+
+    console.log("PARAMS => " + JSON.stringify(param));
+
+    try {
+        // Make the POST request with the appropriate parameters
+        const res = await axiosInstance.post("/login", param);
+        const final = res.data;
+        console.log("LOGG => ", final);
+        return final;
+    } catch (error) {
+        console.error("Error logging in: ", error);
+        throw error; // Rethrow error to be handled by Redux or the component
+    }
 });
 
 
@@ -99,7 +121,7 @@ export const home = createAsyncThunk('home', async (payload) => {
     }).catch((err) => {
         console.log(err);
     })
-    const res = await axiosInstance.get("/home?id=" + userId);
+    const res = await axiosInstance.get("/home");
     const response = await res.data;
     console.log("TEST =>" + JSON.stringify(response))
     return response;

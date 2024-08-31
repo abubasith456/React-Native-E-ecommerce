@@ -1,11 +1,10 @@
 import { FlatList, View } from 'react-native'
 import { menuData } from '../constant/AppConstant';
 import ChatTileCard from '../components/MenuCard';
-import { loggedInUser } from '../services/StorageUtils';
 import { ConfirmDialog } from '../components/Dailog';
 import { useState } from 'react';
-import { faHome, faList, faListCheck, faHomeAlt, faHomeUser } from '@fortawesome/free-solid-svg-icons';
 import { clearAllAddresses } from '../services/AsyncStorageUtils';
+import { deleteAllAsyncStorageData } from '../repositories/localRepo';
 
 
 export const MenuScreen = ({ navigation }) => {
@@ -32,7 +31,7 @@ export const MenuScreen = ({ navigation }) => {
     }
 
     const positiveOnPress = async () => {
-        loggedInUser("")
+        await deleteAllAsyncStorageData();
         await clearAllAddresses();
         navigation.replace('Login')
         setIsDialogShow(false)

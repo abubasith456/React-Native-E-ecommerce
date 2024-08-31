@@ -11,53 +11,54 @@ import FastImage from 'react-native-fast-image'
 
 const ItemsCard = (props) => {
     const {
+        id,
+        productsData,
         image,
         name,
+        restaurant,
         price,
-        rating,
-        id,
         description,
     } = props;
 
     const navigation = useNavigation();
 
-
     return (
-        <Pressable
-            style={styles.container}
-            onPress={() => {
-                navigation.navigate("ProductDetails", {
-                    name: name,
-                    price: price,
-                    img: image,
-                    id: id,
-                    description: description
-                })
-            }
-            }
-        >
-            <FastImage
-                source={{
-                    uri: image,
-                }}
-                style={styles.image}
-            />
-            {/* isVeg */}
-            {/* {isVeg && (
+        <View>
+            <Pressable
+                style={styles.container}
+                onPress={() => {
+                    navigation.navigate("ProductDetails", {
+                        name: name,
+                        price: price,
+                        img: image,
+                        id: id,
+                        description: description
+                    })
+                }
+                }
+            >
+                <FastImage
+                    source={{
+                        uri: image,
+                    }}
+                    style={styles.image}
+                />
+                {/* isVeg */}
+                {/* {isVeg && (
                 <View style={styles.vegContainer}>
                     <MaterialCommunityIcons name="leaf" size={13} color="#fff" />
                     <Text style={styles.vegText}>pure veg RESTAURANT</Text>
                 </View>
             )} */}
 
-            {/* like */}
-            {/* <View style={styles.likeContainer}>
+                {/* like */}
+                {/* <View style={styles.likeContainer}>
                 <Feather name="heart" size={20} color="#FC7D86" />
             </View> */}
 
-            {/* distance and duration */}
+                {/* distance and duration */}
 
-            {/* {duration == 0 ? null : <View style={styles.timerContainer}>
+                {/* {duration == 0 ? null : <View style={styles.timerContainer}>
                 <Image
                     source={require("../images/time.png")}
                     style={styles.timerImage}
@@ -67,8 +68,8 @@ const ItemsCard = (props) => {
                 <Text style={styles.distance}>{distance} km</Text>
             </View>} */}
 
-            {/* discount */}
-            {/* {discount == 0 ? null : <View style={styles.discountContainer}>
+                {/* discount */}
+                {/* {discount == 0 ? null : <View style={styles.discountContainer}>
                 <MaterialCommunityIcons
                     name="brightness-percent"
                     size={12}
@@ -77,42 +78,28 @@ const ItemsCard = (props) => {
                 <Text style={styles.discount}>{discount}% off</Text>
             </View>} */}
 
-            <View style={styles.productNameContainer}>
-                <View style={styles.restaurantDetails}>
-                    {/* restaurant name */}
-                    <Text style={styles.restaurantName}>{name}</Text>
-                    {/* rating */}
-                    {rating == 0 ? null : <View style={styles.ratingContainer}>
+                <View style={styles.productNameContainer}>
+                    <View style={styles.restaurantDetails}>
+                        {/* restaurant name */}
+                        <Text style={styles.restaurantName}>{name}</Text>
                         {/* rating */}
-                        <Text style={styles.rating}>{rating}</Text>
+                        {/* {rating == 0 ? null : <View style={styles.ratingContainer}> */}
+                        {/* rating */}
+                        {/* <Text style={styles.rating}>{rating}</Text> */}
                         {/* <FontAwesome name="star" size={10} color="#fff" /> */}
-                    </View>}
-                </View>
-                <View style={styles.cuisineDetails}>
-                    {/* <Text style={styles.cuisine}>
+                        {/* </View>} */}
+                    </View>
+                    <View style={styles.cuisineDetails}>
+                        {/* <Text style={styles.cuisine}>
                         {cuisines.map((item) => {
                             return `${item}, `;
                         })}
                     </Text> */}
-                    <Text style={styles.bill}>₹{price} for one</Text>
-                </View>
-
-                {/* hr */}
-                <View
-                    style={{ height: 0.3, backgroundColor: "gray", marginVertical: 10 }}
-                />
-
-                {/* total number of order placed so far */}
-                <View style={styles.rateContainer}>
-                    <View style={styles.rateIconContainer}>
-                        {/* <Ionicons name="trending-up" size={9} color="#fff" /> */}
+                        <Text style={styles.bill}>₹{price} for one</Text>
                     </View>
-                    <Text style={styles.rate}>
-                        {description}
-                    </Text>
                 </View>
-            </View>
-        </Pressable>
+            </Pressable>
+        </View>
     );
 };
 
@@ -147,13 +134,12 @@ const styles = StyleSheet.create({
         borderRadius: 20,
     },
     image: {
-        width: "80%",
-        height: 220,
+        width: "100%",
+        height: 200,
         alignContent: "center",
         alignSelf: "center",
         borderTopLeftRadius: 20,
         borderTopRightRadius: 20,
-        margin: 20,
         resizeMode: FastImage.resizeMode.center
     },
     vegContainer: {

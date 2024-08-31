@@ -4,7 +4,7 @@ import React from "react";
 const Banner = (props) => {
     const { content, discount, color } = props;
     return (
-        <View style={styles.container} backgroundColor={color}>
+        <View id={content + discount} style={styles.container} backgroundColor={color}>
             <Text style={styles.textContent}>{content}</Text>
             <Text style={styles.textDiscount}> {discount}% Discount</Text>
         </View>
