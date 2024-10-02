@@ -1,11 +1,9 @@
 import React from "react";
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Splash from "../screens/SplashScreen"
-import Login from "../screens/LoginScreen"
-import SignUp from "../screens/SignUpScreen"
-import Forgot from "../screens/ForgotPasswordScreen"
-import OTP from "../screens/OTPVerificationScren"
-import { Button, StyleSheet } from 'react-native'
+import Login from "../screens/auth/LoginScreen"
+import SignUp from "../screens/auth/SignUpScreen"
+import Forgot from "../screens/auth/ForgotPassScreen"
 import HomeScreen from "./TabNavigation";
 import UpdatePasswordScreen from "../screens/UpdatePassword";
 import BannerScreen from "../screens/BannerScreen";
@@ -18,6 +16,7 @@ import CartScreen from "../screens/CartScreen";
 import AddressScreen from "../screens/AddressScreen";
 import OrderSummaryScreen from "../screens/OrderSummeryScreen";
 import PermissionScreen from "../screens/PermissionScreen";
+import OTPverificationScreen from "../screens/auth/OTPverificationScreen";
 
 
 
@@ -51,7 +50,7 @@ export default function RootStack() {
             <Stack.Screen name="Banner" component={BannerScreen} options={{
                 headerShown: true
             }} />
-            <Stack.Screen name="OTP" component={OTP} options={{
+            <Stack.Screen name="OTPscreen" component={OTPverificationScreen} options={{
                 headerShown: false,
             }} />
             <Stack.Screen name="UpdatePassword" component={UpdatePasswordScreen} options={{
@@ -110,15 +109,3 @@ export default function RootStack() {
         </Stack.Navigator>
     );
 };
-
-const styles = StyleSheet.create({
-    button: {
-        width: '100%',
-        marginVertical: 10,
-        paddingVertical: 2,
-        backgroundColor: "#00BFFF",
-        fontStyle: "normal",
-        fontWeight: "bold"
-    },
-
-})

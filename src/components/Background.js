@@ -1,6 +1,6 @@
-import React, { useEffect, useState, useRef } from 'react'
-import { ImageBackground, StyleSheet, KeyboardAvoidingView, Easing, Animated } from 'react-native'
-import { theme } from '../theme/Theme'
+import React from 'react'
+import { ScrollView } from 'react-native';
+import { ImageBackground, StyleSheet, KeyboardAvoidingView } from 'react-native'
 
 export default function Background({ children }) {
     return (
@@ -10,10 +10,12 @@ export default function Background({ children }) {
             style={styles.background}
         >
             <KeyboardAvoidingView style={styles.container} behavior="padding">
-                {children}
+                <ScrollView contentContainerStyle={{ flexGrow: 1 }} keyboardShouldPersistTaps="handled">
+                    {children}
+                </ScrollView>
             </KeyboardAvoidingView>
         </ImageBackground>
-    )
+    );
 }
 
 const styles = StyleSheet.create({

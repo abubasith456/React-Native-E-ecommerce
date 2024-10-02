@@ -2,8 +2,9 @@ import axios from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { TextDecoder } from 'text-encoding';
 import { myFcmToken } from '../constant/AppConstant';
+import { getBaseUrl } from '../services/RemoteConfig';
 
-const base_url = "https://hayat-shop.onrender.com"
+const base_url = getBaseUrl();
 const axiosInstance = axios.create({ baseURL: base_url })
 
 // Login

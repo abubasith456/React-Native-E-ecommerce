@@ -15,35 +15,23 @@ import CenteredButton from "../../components/button/Button";
 import { faEyeSlash, faEye } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import ProgressBar from '../../components/ProgressBar';
+import BackButton from '../../components/BackButton';
 
 
-const LoginScreen = ({ navigation }) => {
+const ForgotPassScreen = ({ navigation }) => {
 
     const [email, setEmail] = useState({ value: '', error: '' })
-    const [password, setPassword] = useState({ value: '', error: '' })
-    const [showPassword, setShowPassword] = useState(false);
+    const { data, isLoader, isError } = useSelector(state => state.forgot);
     const [visible, setVisible] = useState(false);
     const dispatch = useDispatch();
-    const { data, isLoader, isError } = useSelector(state => state.login);
+
+    const [password, setPassword] = useState({ value: '', error: '' })
+    const [showPassword, setShowPassword] = useState(false);
 
     useEffect(() => {
         if (data != null) {
             if (data.status == 200) {
-                console.log("Login Done");
-                const userData = {
-                    user_id: data.userData.user_id,
-                    username: data.userData.username,
-                    email: data.userData.email,
-                    dateOfBirth: data.userData.dateOfBirth,
-                    mobileNumber: data.userData.mobileNumber,
-                    role: data.userData.role,
-                };
-                insertUserData(userData);
-                dispatch(resetState());
-                navigation.reset({
-                    index: 0,
-                    routes: [{ name: 'Home' }],
-                })
+                setVisible(true)
             } else {
                 setVisible(true)
             }
@@ -54,21 +42,26 @@ const LoginScreen = ({ navigation }) => {
         }
     }, [data, isLoader, isError])
 
-    const onLoginPressed = () => {
+    const onForgotPressed = () => {
         const emailError = emailValidator(email.value)
-        const passwordError = passwordValidator(password.value)
-        if (emailError || passwordError) {
+        if (emailError) {
             setEmail({ ...email, error: emailError })
-            setPassword({ ...password, error: passwordError })
             return
         }
         const emailValue = email.value
-        const passwordValue = password.value
-        dispatch(login({ emailValue, passwordValue }))
+        dispatch(forgotPassword({ emailValue }))
     }
 
     function onDialogPressed() {
         setVisible(false)
+        if (data.status == 200) {
+            dispatch(resetForgotState())
+            navigation.dispatch(
+                CommonActions.navigate('OTP', {
+                    email: email.value
+                })
+            )
+        }
     }
 
     function resetValues() {
@@ -76,66 +69,44 @@ const LoginScreen = ({ navigation }) => {
         setPassword({ value: '', error: '' });
     }
 
+    function goBack() {
+        navigation.dispatch(CommonActions.goBack())
+    }
+
     return (
         <Background>
             {isLoader ? <ProgressBar isLoading={isLoader} /> : null}
             {visible ? <ShowDialog message={data.message} onPress={onDialogPressed} /> : null}
             <View style={styles.container}>
+                <BackButton goBack={goBack} />
                 <Image
                     style={styles.logo}
                     resizeMode="contain"
                     source={require("../../images/logo.png")}
                 />
 
-                <Text style={styles.title}>Loging</Text>
-                <Text style={styles.subtitle}>Enter your emails and password</Text>
+                <Text style={styles.title}>Forgot Password</Text>
 
                 <View style={styles.inputContainer}>
                     <Text style={styles.inputLabel}>Email</Text>
-                    <TextInput
-                        returnKeyType="next"
-                        value={email.value}
-                        onChangeText={(text) => setEmail({ value: text, error: '' })}
-                        error={!!email.error}
-                        errorText={email.error}
-                        autoCapitalize="none"
-                        autoCompleteType="email"
-                        textContentType="emailAddress"
-                        keyboardType="email-address"
-                    />
-                </View>
-
-                <View style={styles.inputContainer}>
-                    <Text style={styles.inputLabel}>Password</Text>
-                    <View style={styles.passwordContainer}>
+                    <View style={{ flexDirection: 'row', }}>
                         <TextInput
-                            returnKeyType="done"
-                            value={password.value}
-                            onChangeText={(text) => setPassword({ value: text, error: '' })}
-                            error={!!password.error}
-                            errorText={password.error}
-                            secureTextEntry={!showPassword}  // Toggle secureTextEntry based on state
+                            returnKeyType="next"
+                            value={email.value}
+                            onChangeText={(text) => setEmail({ value: text, error: '' })}
+                            error={!!email.error}
+                            errorText={email.error}
+                            autoCapitalize="none"
+                            autoCompleteType="email"
+                            textContentType="emailAddress"
+                            keyboardType="email-address"
                         />
-                        <TouchableOpacity onPress={() => setShowPassword(!showPassword)} style={styles.icon}>
-                            <FontAwesomeIcon icon={showPassword ? faEye : faEyeSlash} size={24} color="#333" />
-                        </TouchableOpacity>
                     </View>
                 </View>
 
-                <TouchableOpacity onPress={() => {
-                    resetValues();
-                    navigation.dispatch(
-                        CommonActions.navigate({
-                            name: 'Forgot',
-                        })
-                    )
-                }} style={styles.forgotPasswordContainer}>
-                    <Text style={styles.forgotPassword}>Forgot Password?</Text>
-                </TouchableOpacity>
-
                 <CenteredButton
-                    title="Login"
-                    onPress={onLoginPressed}
+                    title="Send OTP"
+                    onPress={onForgotPressed}
                     style={styles.button}
                 />
 
@@ -232,4 +203,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default LoginScreen;
+export default ForgotPassScreen;

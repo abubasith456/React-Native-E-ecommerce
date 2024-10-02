@@ -16,6 +16,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { register } from '../../repositories/apiRepo';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import ShowDialog from '../../components/Dailog';
+import BackButton from '../../components/BackButton';
 
 const SignUpScreen = ({ navigation }) => {
     const route = useRoute();
@@ -34,11 +35,11 @@ const SignUpScreen = ({ navigation }) => {
     useEffect(() => {
         if (data != null) {
             if (data.status == 200) {
-                /* navigation.dispatch(
+                navigation.dispatch(
                     CommonActions.navigate({
                         name: 'Home',
                     })
-                ) */
+                )
             } else {
                 setVisible(true)
             }
@@ -93,11 +94,16 @@ const SignUpScreen = ({ navigation }) => {
         setShowDatePicker(true);
     };
 
+    function goBack() {
+        navigation.dispatch(CommonActions.goBack())
+    }
+
     return (
         <Background>
             {isLoader ? <Progress isLoading={isLoader} /> : null}
             {visible ? <ShowDialog message={data.message} onPress={onDialogPressed} /> : null}
             <View style={styles.container}>
+                <BackButton goBack={goBack} />
                 {/* Logo */}
                 <Image
                     style={styles.logo}
@@ -200,12 +206,12 @@ const SignUpScreen = ({ navigation }) => {
                 />
 
                 {/* Footer */}
-                <View style={styles.footer}>
+                {/* <View style={styles.footer}>
                     <Text style={styles.footerText}>Already have an account? </Text>
                     <TouchableOpacity onPress={() => { }}>
                         <Text style={styles.footerLink}>Login</Text>
                     </TouchableOpacity>
-                </View>
+                </View> */}
             </View>
         </Background>
     );

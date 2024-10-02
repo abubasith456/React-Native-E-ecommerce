@@ -29,14 +29,13 @@ export const BackButtonWithText = ({ navigation, title }) => {
 
 const styles = StyleSheet.create({
     container: {
-        position: 'absolute',
         top: 10 + getStatusBarHeight(),
         left: 5,
     },
     image: {
         width: 25,
         height: 25,
-        color: "white"
+        color: "black"
     },
     header: {
         flexDirection: 'row',
